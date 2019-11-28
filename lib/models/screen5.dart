@@ -5,7 +5,7 @@ import 'package:surveyapp/models/screen4.dart';
 // import '../questions.dart';
 
 class Screen5 extends StatefulWidget {
-  final String screen4Answer;
+  final Map screen4Answer;
 
   const Screen5({Key key, this.screen4Answer}) : super(key: key);
   @override

@@ -5,7 +5,7 @@ import 'package:surveyapp/models/screen3.dart';
 // import '../questions.dart';
 
 class Screen2 extends StatefulWidget {
-  final String screen1Answer;
+  final Map screen1Answer;
 
   const Screen2({Key key, this.screen1Answer}) : super(key: key);
   @override
@@ -57,27 +57,34 @@ class _Screen2State extends State<Screen2> {
                               padding: EdgeInsets.all(20),
                               child: Row(
                                 children: <Widget>[
-                                  Container(
-                                    height: 50,
-                                    margin: EdgeInsets.all(5),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.145,
-                                    decoration: BoxDecoration(
-                                        // color: VerifiColors.blue,
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/img/png/emoji_1.png"),
-                                          fit: BoxFit.cover,
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromRGBO(0, 0, 0, 0.1),
-                                            blurRadius: 19.5,
-                                            offset: Offset(0, 6),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5))),
+                                  GestureDetector(
+                                    onTap: () {
+                                      widget.screen1Answer['screen2'] =
+                                          "emoji_1";
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.145,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_1.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
                                   ),
                                   Container(
                                     height: 52,
@@ -194,7 +201,10 @@ class _Screen2State extends State<Screen2> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                Screen3())),
+                                                Screen3(
+                                                  screen2Answer:
+                                                      widget.screen1Answer,
+                                                ))),
                                   ),
                                 ),
                               ],

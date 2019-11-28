@@ -5,9 +5,9 @@ import 'package:surveyapp/models/screen5.dart';
 // import '../questions.dart';
 
 class Screen4 extends StatefulWidget {
-  final String screen3Answer;
+ final Map screen3Answer;
 
-  const Screen4({Key key, this.screen3Answer}) : super(key: key);
+ const Screen4({Key key, this.screen3Answer}) : super(key: key);
 
   @override
   _Screen4State createState() => _Screen4State();
@@ -58,27 +58,34 @@ class _Screen4State extends State<Screen4> {
                               padding: EdgeInsets.all(20),
                               child: Row(
                                 children: <Widget>[
-                                  Container(
-                                    height: 50,
-                                    margin: EdgeInsets.all(5),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.145,
-                                    decoration: BoxDecoration(
-                                        // color: VerifiColors.blue,
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/img/png/emoji_1.png"),
-                                          fit: BoxFit.cover,
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromRGBO(0, 0, 0, 0.1),
-                                            blurRadius: 19.5,
-                                            offset: Offset(0, 6),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5))),
+                                  GestureDetector(
+                                    onTap: () {
+                                      widget.screen3Answer['screen3'] =
+                                          'emoji_1';
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.145,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_1.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
                                   ),
                                   Container(
                                     height: 52,
@@ -181,10 +188,10 @@ class _Screen4State extends State<Screen4> {
                                       color: Colors.redAccent,
                                       child: Text('previous question'),
                                       onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                Screen3())),
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  Screen3())),
                                     )),
                                 Container(
                                   margin: EdgeInsets.all(5),
@@ -195,7 +202,7 @@ class _Screen4State extends State<Screen4> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                Screen5())),
+                                                Screen5(screen4Answer: widget.screen3Answer,))),
                                   ),
                                 ),
                               ],

@@ -5,9 +5,9 @@ import 'package:surveyapp/models/screen4.dart';
 // import '../questions.dart';
 
 class Screen3 extends StatefulWidget {
-  final String screen2Answer;
+ final Map screen2Answer;
 
-  const Screen3({Key key, this.screen2Answer}) : super(key: key);
+ const Screen3({Key key, this.screen2Answer}) : super(key: key);
 
   @override
   _Screen3State createState() => _Screen3State();
@@ -58,27 +58,34 @@ class _Screen3State extends State<Screen3> {
                               padding: EdgeInsets.all(20),
                               child: Row(
                                 children: <Widget>[
-                                  Container(
-                                    height: 50,
-                                    margin: EdgeInsets.all(5),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.145,
-                                    decoration: BoxDecoration(
-                                        // color: VerifiColors.blue,
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/img/png/emoji_1.png"),
-                                          fit: BoxFit.cover,
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromRGBO(0, 0, 0, 0.1),
-                                            blurRadius: 19.5,
-                                            offset: Offset(0, 6),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5))),
+                                  GestureDetector(
+                                    onTap: () {
+                                      widget.screen2Answer['screen3'] =
+                                          'emoji_1';
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.145,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_1.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
                                   ),
                                   Container(
                                     height: 52,
@@ -195,7 +202,10 @@ class _Screen3State extends State<Screen3> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                Screen4())),
+                                                Screen4(
+                                                  screen3Answer:
+                                                      widget.screen2Answer,
+                                                ))),
                                   ),
                                 ),
                               ],

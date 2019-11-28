@@ -12,6 +12,8 @@ class Screen1 extends StatefulWidget {
 class _Screen1State extends State<Screen1> {
   String answer = "";
 
+  Map answers = {};
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -62,6 +64,7 @@ class _Screen1State extends State<Screen1> {
                                       setState(() {
                                         answer = "emoji_1";
                                       });
+                                      answers['screen1'] = "emoji_1";
                                     },
                                     child: Container(
                                       height: 50,
@@ -205,7 +208,7 @@ class _Screen1State extends State<Screen1> {
                                                 builder:
                                                     (BuildContext context) =>
                                                         Screen2(
-                                                  screen1Answer: answer,
+                                                  screen1Answer: answers,
                                                 ),
                                               )),
                                         ),
