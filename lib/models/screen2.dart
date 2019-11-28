@@ -4,7 +4,15 @@ import 'package:surveyapp/models/screen3.dart';
 
 // import '../questions.dart';
 
-class Screen2 extends StatelessWidget {
+class Screen2 extends StatefulWidget {
+  final String screen1Answer;
+
+  const Screen2({Key key, this.screen1Answer}) : super(key: key);
+  @override
+  _Screen2State createState() => _Screen2State();
+}
+
+class _Screen2State extends State<Screen2> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -172,10 +180,10 @@ class Screen2 extends StatelessWidget {
                                       color: Colors.redAccent,
                                       child: Text('previous question'),
                                       onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                Screen1())),
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  Screen1())),
                                     )),
                                 Container(
                                   margin: EdgeInsets.all(5),

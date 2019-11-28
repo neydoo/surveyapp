@@ -4,7 +4,16 @@ import 'package:surveyapp/models/screen5.dart';
 
 // import '../questions.dart';
 
-class Screen4 extends StatelessWidget {
+class Screen4 extends StatefulWidget {
+  final String screen3Answer;
+
+  const Screen4({Key key, this.screen3Answer}) : super(key: key);
+
+  @override
+  _Screen4State createState() => _Screen4State();
+}
+
+class _Screen4State extends State<Screen4> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

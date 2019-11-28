@@ -4,7 +4,14 @@ import 'package:surveyapp/models/screen2.dart';
 
 // import '../questions.dart';
 
-class Screen1 extends StatelessWidget {
+class Screen1 extends StatefulWidget {
+  @override
+  _Screen1State createState() => _Screen1State();
+}
+
+class _Screen1State extends State<Screen1> {
+  String answer = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -50,7 +57,12 @@ class Screen1 extends StatelessWidget {
                               child: Row(
                                 children: <Widget>[
                                   GestureDetector(
-                                    onTap: ()=>print('I was touched!'),
+                                    onTap: () {
+                                      print('I was touched!');
+                                      setState(() {
+                                        answer = "emoji_1";
+                                      });
+                                    },
                                     child: Container(
                                       height: 50,
                                       margin: EdgeInsets.all(5),
@@ -181,18 +193,24 @@ class Screen1 extends StatelessWidget {
                                               builder: (BuildContext context) =>
                                                   Home())),
                                     )),
-                                Container(
-                                  margin: EdgeInsets.all(5),
-                                  child: RaisedButton(
-                                    color: Colors.greenAccent,
-                                    child: Text('next question'),
-                                    onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                Screen2())),
-                                  ),
-                                ),
+                                answer.length > 1
+                                    ? Container(
+                                        margin: EdgeInsets.all(5),
+                                        child: RaisedButton(
+                                          color: Colors.greenAccent,
+                                          child: Text('next question'),
+                                          onPressed: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        Screen2(
+                                                  screen1Answer: answer,
+                                                ),
+                                              )),
+                                        ),
+                                      )
+                                    : Container(),
                               ],
                             ),
                           ),
