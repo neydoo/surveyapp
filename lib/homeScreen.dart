@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surveyapp/models/screen1.dart';
+import 'package:surveyapp/models/user_data.dart';
 
 class Home extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class Home extends StatelessWidget {
             child: Text('Take Survey'),
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (BuildContext context) => Screen1()),
+              MaterialPageRoute(builder: (BuildContext context) => User()),
             ),
           ),
         ),

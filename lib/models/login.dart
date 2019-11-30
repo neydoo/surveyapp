@@ -1,11 +1,11 @@
 import 'dart:async';
-// import 'dart:convert';
-// import 'dart:io';
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // import 'package:pay_by_verifi/screens/auth/email_confirmation.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:surveyapp/config/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyapp/config/api.dart';
 import 'package:surveyapp/homeScreen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:surveyapp/config/verifi_colors.dart';
@@ -15,7 +15,7 @@ import 'package:surveyapp/models/authentication.dart';
 // import 'package:pay_by_verifi/screens/auth/activate.dart';
 import 'package:surveyapp/bloc/bloc.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 // import 'package:pay_by_verifi/screens/auth/finish_activate.dart';
 // import 'package:pay_by_verifi/screens/auth/forgot_password.dart';
 // import 'package:pay_by_verifi/screens/dashboard/dashboard.dart';
@@ -87,55 +87,45 @@ class _LoginState extends State<Login> {
     return true;
   }
 
-  String userlogin = r"""
-     query login($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
-    token
-  }
-}
-    """;
-
   Future loginUser() async {
+    Map<String, dynamic> inputData = {
+      "email": email.text.trim(),
+      "password": password.text.trim()
+    };
+    // validation checks
     if (validateInput()) {
       try {
-        print('here');
-        return Scaffold(
-          body: Query(
-            options: QueryOptions(
-              document: userlogin,
-              variables: <String, dynamic>{
-                'email': email.text.trim(),
-                'password': password.text.trim()
-              },
-              pollInterval: 1,
-            ),
-            builder: (
-              QueryResult result, {
-              VoidCallback refetch,
-            }) {
-              print('here 1');
+        http.Response response = await http.post(
+          API.login,
+          body: json.encode(inputData),
+          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+        );
 
-              if (result.loading) {
-                return Center(child: CircularProgressIndicator());
-              }
-              if (result.errors.length > 1) {
-                setState(() {
-                  _error = result.errors as String;
-                });
-              }
+        var decodedResponse = json.decode(response.body);
+        int statusCode = response.statusCode;
 
-              final _authenticationBloc =
-                  BlocProvider.of<AuthenticationBloc>(context);
-              _authenticationBloc.dispatch(FetchAuthState());
+        // if not successful, confirm user is an employee without an account
+        if (statusCode != 200) {
+          setState(() {
+            _error = decodedResponse['message'];
+          });
+          return;
+        }
+        print(decodedResponse);
+        // save user details and token in shared preferences
+        await Authentication.storeToken(decodedResponse['response']);
 
-              // redirect to dashboard
-              Navigator.of(context).pushReplacement(
-                  new MaterialPageRoute(builder: (context) => Home()));
+        final _authenticationBloc =
+            BlocProvider.of<AuthenticationBloc>(context);
+        _authenticationBloc.dispatch(FetchAuthState());
 
-              Authentication.storeToken(result);
-              return Scaffold();
-            }),
-        ); 
+        // redirect to dashboard
+        Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(
+            builder: (context) => Home(),
+            settings: RouteSettings(name: 'Home'),
+          ),
+        );
       } catch (e) {
         print(e);
         // set error
