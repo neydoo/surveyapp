@@ -14,5 +14,9 @@ class API {
   // answer3
   // answer4
   // answer5
+  // fullName
+  // lat
+  // lon
+  // play
 
 }
