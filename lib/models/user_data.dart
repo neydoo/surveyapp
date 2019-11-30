@@ -1,24 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// import 'package:pay_by_verifi/screens/auth/email_confirmation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyapp/config/api.dart';
 import 'package:surveyapp/homeScreen.dart';
-// import 'package:pay_by_verifi/config/svgs.dart';
 import 'package:surveyapp/config/verifi_colors.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
 import 'package:surveyapp/custom_widgets/form_input_widget.dart';
-import 'package:surveyapp/models/authentication.dart';
-// import 'package:pay_by_verifi/screens/auth/activate.dart';
 import 'package:surveyapp/bloc/bloc.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:http/http.dart' as http;
-// import 'package:pay_by_verifi/screens/auth/finish_activate.dart';
-// import 'package:pay_by_verifi/screens/auth/forgot_password.dart';
-// import 'package:pay_by_verifi/screens/dashboard/dashboard.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surveyapp/models/screen1.dart';
 
@@ -41,9 +29,10 @@ class _UserState extends State<User> {
   // nodes for our inputs
   static FocusNode _nodeText1 = FocusNode();
   static FocusNode _nodeText2 = FocusNode();
+  static FocusNode _nodeText3 = FocusNode();
   // controllers for our inputs
+  static TextEditingController pname = TextEditingController();
   static TextEditingController email = TextEditingController();
-  static TextEditingController name = TextEditingController();
   static TextEditingController play = TextEditingController();
 
   // used to validate the input of the form
@@ -57,7 +46,7 @@ class _UserState extends State<User> {
       setState(() {
         _emailError = "Fill up email";
       });
-      if (name.text.length < 1) {
+      if (pname.text.length < 1) {
         setState(() {
           _nameError = "Fill up name";
         });
@@ -69,12 +58,24 @@ class _UserState extends State<User> {
       }
       return false;
     }
-    return true;
+    userdata = {
+      "name": pname.text.trim(),
+      "email": email.text.trim(),
+      "play": play.text.trim()
+    };
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => Screen1(
+          answers: userdata,
+        ),
+      ),
+    );
   }
 
   Future loginUser() async {
     Map<String, dynamic> inputData = {
-      "name": name.text.trim(),
+      "name": pname.text.trim(),
       "email": email.text.trim(),
       "play": play.text.trim()
     };
@@ -213,12 +214,15 @@ class _UserState extends State<User> {
         keyboardBarColor: Colors.grey[200],
         nextFocus: true,
         actions: [
-          KeyboardAction(
-            focusNode: _nodeText1,
-          ),
-          KeyboardAction(
-            focusNode: _nodeText2,
-          ),
+          // KeyboardAction(
+          //   focusNode: _nodeText1,
+          // ),
+          // KeyboardAction(
+          //   focusNode: _nodeText2,
+          // ),
+          // KeyboardAction(
+          //   focusNode: _nodeText3,
+          // ),
         ],
         child: Stack(
           children: <Widget>[
@@ -270,7 +274,7 @@ class _UserState extends State<User> {
                               _nameError = "Fill up name";
                             });
                           },
-                          controller: name,
+                          controller: pname,
                           keyboardType: TextInputType.text,
                           node: _nodeText1,
                         ),
@@ -292,7 +296,7 @@ class _UserState extends State<User> {
                           },
                           controller: email,
                           keyboardType: TextInputType.emailAddress,
-                          node: _nodeText1,
+                          node: _nodeText2,
                         ),
                         emailErrorWidget(),
                         SizedBox(
@@ -312,7 +316,7 @@ class _UserState extends State<User> {
                           },
                           controller: play,
                           keyboardType: TextInputType.text,
-                          node: _nodeText1,
+                          node: _nodeText3,
                         ),
                         playErrorWidget(),
                         SizedBox(
@@ -326,17 +330,11 @@ class _UserState extends State<User> {
                           height: 16.0,
                         ),
                         ButtonWidget(
-                          text: "Next",
-                          loadingState: loading,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => Screen1(
-                                answers: userdata,
-                              ),
-                            ),
-                          ),
-                        ),
+                            text: "Next",
+                            loadingState: loading,
+                            onTap: () async {
+                              await validateInput();
+                            }),
                         SizedBox(
                           height: 20.0,
                         ),

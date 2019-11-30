@@ -1,14 +1,9 @@
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:surveyapp/models/authentication.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surveyapp/config/verifi_colors.dart';
 import 'package:surveyapp/models/login.dart';
-import 'package:surveyapp/models/graphql.dart';
 import 'package:surveyapp/bloc/bloc.dart';
-import 'package:surveyapp/models/user_data.dart';
 import './homeScreen.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 

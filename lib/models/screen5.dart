@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
 import 'package:surveyapp/homeScreen.dart';
-
+import 'package:surveyapp/config/api.dart';
+import 'package:surveyapp/models/authentication.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:surveyapp/config/verifi_colors.dart';
+import 'package:location/location.dart';
 // import '../questions.dart';
 
 class Screen5 extends StatefulWidget {
@@ -13,70 +20,118 @@ class Screen5 extends StatefulWidget {
 }
 
 class _Screen5State extends State<Screen5> {
-  bool answerSelected = false;
-
   Map answers = {};
-  // Future loginUser() async {
-  //   Map<String, dynamic> inputData = {
-  //     "name": name.text.trim(),
-  //     "email": email.text.trim(),
-  //     "play": play.text.trim()
-  //   };
-  //   // validation checks
-  //   if (validateInput()) {
-  //     try {
-  //       http.Response response = await http.post(
-  //         API.login,
-  //         body: json.encode(inputData),
-  //         headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-  //       );
+  void initState() {
+    super.initState();
 
-  //       var decodedResponse = json.decode(response.body);
-  //       int statusCode = response.statusCode;
+    location.onLocationChanged().listen((value) {
+      setState(() {
+        userLocation = value;
+      });
+    });
+  }
 
-  //       // if not successful, confirm user is an employee without an account
-  //       if (statusCode != 200) {
-  //         Map<String, dynamic> inputData = {"email": email.text.trim()};
-  //         http.Response validateResponse = await http.post(
-  //           API.validate,
-  //           body: json.encode(inputData),
-  //           headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-  //         );
+  var location = new Location();
 
-  //         // set error
-  //         setState(() {
-  //           _error = decodedResponse['response']['message'];
-  //         });
-  //         return;
-  //       }
+  Map<String, double> userLocation;
 
-  //       print(decodedResponse['response']);
+  validateInput() {
+    // print(widget.screen4Answer['name']);
+    // print(widget.screen4Answer as String);
+    // return false;
+    setState(() {
+      _error = "";
+    });
 
-  //       // save user details and token in shared preferences
-  //       await Authentication.storeToken(decodedResponse['response']);
+    if (widget.screen4Answer["screen5"] == null) {
+      setState(() {
+        _error = "Select an option";
+      });
 
-  //       final _authenticationBloc =
-  //           BlocProvider.of<AuthenticationBloc>(context);
-  //       _authenticationBloc.dispatch(FetchAuthState());
+      return false;
+    }
+    return save();
+  }
 
-  //       // redirect to dashboard
-  //       Navigator.of(context).pushReplacement(
-  //           new MaterialPageRoute(builder: (context) => Home()));
-  //     } catch (e) {
-  //       print(e);
-  //       // set error
-  //       setState(() {
-  //         _error = "An error occured";
-  //       });
-  //     }
-  //   }
-  // }
+  String _error = "";
 
-// stores the error state
-  // String _error = "";
-  // String _emailError = "";
-  // String _nameError = "";
-  // String _playError = "";
+  Widget errorWidget() {
+    if (_error.length > 0) {
+      return Column(
+        children: <Widget>[
+          SizedBox(
+            height: 2,
+          ),
+          Text(
+            _error,
+            style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: VerifiColors.red,
+                fontFamily: "Lato"),
+          ),
+        ],
+      );
+    }
+    return Container();
+  }
+
+  Future save() async {
+    // print(widget.screen4Answer);
+
+    Map<String, dynamic> inputData = {
+      "answer1": widget.screen4Answer['screen1'],
+      "answer2": widget.screen4Answer['screen2'],
+      "answer3": widget.screen4Answer['screen3'],
+      "answer4": widget.screen4Answer['screen4'],
+      "answer5": widget.screen4Answer['screen5'],
+      "fullName": widget.screen4Answer['name'],
+      "play": widget.screen4Answer['play'],
+      "email": widget.screen4Answer['email'],
+      'lat': userLocation["latitude"].toString(),
+      'lng': userLocation["longitude"].toString()
+    };
+
+    try {
+      String token = await Authentication.getToken();
+      print('here');
+      print(userLocation["longitude"].toString());
+      http.Response response = await http.post(
+        API.save,
+        body: json.encode(inputData),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: "Bearer $token"
+        },
+      );
+
+      var decodedResponse = json.decode(response.body);
+      int statusCode = response.statusCode;
+      print(decodedResponse);
+
+      if (statusCode != 200) {
+        setState(() {
+          _error = decodedResponse['message'];
+        });
+        return;
+      }
+      print(decodedResponse);
+
+      // redirect to dashboard
+      Navigator.of(context).pushReplacement(
+        new MaterialPageRoute(
+          builder: (context) => Home(),
+          settings: RouteSettings(name: 'Home'),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      // set error
+      setState(() {
+        _error = "An error occured";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,9 +179,9 @@ class _Screen5State extends State<Screen5> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen4Answer['screen5'] = 'one';
+                              widget.screen4Answer['screen5'] = '1';
                             },
                             child: Container(
                               height: 50,
@@ -152,9 +207,9 @@ class _Screen5State extends State<Screen5> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen4Answer['screen5'] = 'two';
+                              widget.screen4Answer['screen5'] = '2';
                             },
                             child: Container(
                               height: 52,
@@ -180,9 +235,9 @@ class _Screen5State extends State<Screen5> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen4Answer['screen5'] = 'three';
+                              widget.screen4Answer['screen5'] = '3';
                             },
                             child: Container(
                               height: 52,
@@ -209,9 +264,9 @@ class _Screen5State extends State<Screen5> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen4Answer['screen5'] = 'four';
+                              widget.screen4Answer['screen5'] = '4';
                             },
                             child: Container(
                               height: 52,
@@ -238,9 +293,9 @@ class _Screen5State extends State<Screen5> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen4Answer['screen5'] = 'five';
+                              widget.screen4Answer['screen5'] = '5';
                             },
                             child: Container(
                               height: 52,
@@ -268,36 +323,21 @@ class _Screen5State extends State<Screen5> {
                         ],
                       ),
                     ),
+                    errorWidget(),
                     Container(
                       margin: EdgeInsets.all(50),
                       child: Row(
                         children: [
-                          Container(
-                            margin: EdgeInsets.all(5),
-                            child: ButtonWidget(
-                              danger: true,
-                              text: 'Back',
-                              onTap: () => Navigator.pop(context),
-                            ),
+                          ButtonWidget(
+                            danger: true,
+                            text: 'Back',
+                            onTap: () => Navigator.pop(context),
                           ),
-                          answerSelected
-                              ? Container(
-                                  margin: EdgeInsets.all(5),
-                                  child: ButtonWidget(
-                                    text: 'Submit',
-                                    onTap: () {
-                                      print(widget.screen4Answer);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Home(),
-                                      ),
-                                    );
-                                    }
-                                  ),
-                                )
-                              : Container(),
+                          ButtonWidget(
+                              text: 'Submit',
+                              onTap: () async {
+                                await validateInput();
+                              }),
                         ],
                       ),
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
 import 'package:surveyapp/models/screen4.dart';
+import 'package:surveyapp/config/verifi_colors.dart';
 
 // import '../questions.dart';
 
@@ -14,7 +15,48 @@ class Screen3 extends StatefulWidget {
 }
 
 class _Screen3State extends State<Screen3> {
-  bool answerSelected = false;
+  validateInput() {
+    setState(() {
+      _error = "";
+    });
+    if (widget.screen2Answer["screen3"] == null) {
+      setState(() {
+        _error = "Select an option";
+      });
+
+      return false;
+    }
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => Screen4(
+                screen3Answer: widget.screen2Answer,
+              )),
+    );
+  }
+
+  String _error = "";
+  Widget errorWidget() {
+    if (_error.length > 0) {
+      return Column(
+        children: <Widget>[
+          SizedBox(
+            height: 2,
+          ),
+          Text(
+            _error,
+            style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: VerifiColors.red,
+                fontFamily: "Lato"),
+          ),
+        ],
+      );
+    }
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,7 +93,7 @@ class _Screen3State extends State<Screen3> {
                 Container(
                   width: double.infinity,
                   // margin: EdgeInsets.all(50),
-                  padding: EdgeInsets.only(left:50,top: 20),
+                  padding: EdgeInsets.only(left: 50, top: 20),
                   child: Column(
                     children: [
                       Row(children: <Widget>[
@@ -59,7 +101,6 @@ class _Screen3State extends State<Screen3> {
                         //   onTap: () {
                         //     setState(() {
                         //       // answer = "1";
-                        //       answerSelected = true;
                         //     });
                         //     widget.screen2Answer['screen3'] = "zero";
                         //   },
@@ -90,10 +131,9 @@ class _Screen3State extends State<Screen3> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              // answer = "1";
-                              answerSelected = true;
+                              _error = "";
                             });
-                            widget.screen2Answer['screen3'] = "one";
+                            widget.screen2Answer['screen3'] = "1";
                           },
                           child: Container(
                             height: 45,
@@ -119,10 +159,9 @@ class _Screen3State extends State<Screen3> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              // answer = "1";
-                              answerSelected = true;
+                              _error = "";
                             });
-                            widget.screen2Answer['screen3'] = "two";
+                            widget.screen2Answer['screen3'] = "2";
                           },
                           child: Container(
                             height: 45,
@@ -148,10 +187,9 @@ class _Screen3State extends State<Screen3> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              // answer = "1";
-                              answerSelected = true;
+                              _error = "";
                             });
-                            widget.screen2Answer['screen3'] = "three";
+                            widget.screen2Answer['screen3'] = "3";
                           },
                           child: Container(
                             height: 45,
@@ -177,10 +215,9 @@ class _Screen3State extends State<Screen3> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              // answer = "1";
-                              answerSelected = true;
+                              _error = "";
                             });
-                            widget.screen2Answer['screen3'] = "four";
+                            widget.screen2Answer['screen3'] = "4";
                           },
                           child: Container(
                             height: 45,
@@ -205,12 +242,10 @@ class _Screen3State extends State<Screen3> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            print(answerSelected);
                             setState(() {
-                              // answer = "1";
-                              answerSelected = true;
+                              _error = "";
                             });
-                            widget.screen2Answer['screen3'] = "five";
+                            widget.screen2Answer['screen3'] = "5";
                           },
                           child: Container(
                             height: 45,
@@ -238,12 +273,10 @@ class _Screen3State extends State<Screen3> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              print(answerSelected);
                               setState(() {
-                                // answer = "1";
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen2Answer['screen3'] = "six";
+                              widget.screen2Answer['screen3'] = "6";
                             },
                             child: Container(
                               height: 45,
@@ -268,12 +301,10 @@ class _Screen3State extends State<Screen3> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              print(answerSelected);
                               setState(() {
-                                // answer = "1";
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen2Answer['screen3'] = "seven";
+                              widget.screen2Answer['screen3'] = "7";
                             },
                             child: Container(
                               height: 45,
@@ -299,12 +330,10 @@ class _Screen3State extends State<Screen3> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              print(answerSelected);
                               setState(() {
-                                // answer = "1";
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen2Answer['screen3'] = "eight";
+                              widget.screen2Answer['screen3'] = "8";
                             },
                             child: Container(
                               height: 45,
@@ -330,12 +359,10 @@ class _Screen3State extends State<Screen3> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              print(answerSelected);
                               setState(() {
-                                // answer = "1";
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen2Answer['screen3'] = "nine";
+                              widget.screen2Answer['screen3'] = "9";
                             },
                             child: Container(
                               height: 45,
@@ -361,12 +388,10 @@ class _Screen3State extends State<Screen3> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              print(answerSelected);
                               setState(() {
-                                // answer = "1";
-                                answerSelected = true;
+                                _error = "";
                               });
-                              widget.screen2Answer['screen3'] = "ten";
+                              widget.screen2Answer['screen3'] = "10";
                             },
                             child: Container(
                               height: 45,
@@ -394,34 +419,17 @@ class _Screen3State extends State<Screen3> {
                     ],
                   ),
                 ),
+                errorWidget(),
                 Container(
                   margin: EdgeInsets.all(50),
                   child: Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(5),
-                        child: ButtonWidget(
-                              danger: true,
-                              text: 'Back',
-                              onTap: () => Navigator.pop(context),
-                        ),
+                      ButtonWidget(
+                        danger: true,
+                        text: 'Back',
+                        onTap: () => Navigator.pop(context),
                       ),
-                      answerSelected
-                          ? Container(
-                              margin: EdgeInsets.all(5),
-                              child: ButtonWidget(
-                                text: 'Next',
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) => Screen4(
-                                      screen3Answer: widget.screen2Answer,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Container(),
+                      ButtonWidget(text: 'Next', onTap: () => validateInput()),
                     ],
                   ),
                 ),

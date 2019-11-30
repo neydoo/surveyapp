@@ -3,22 +3,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// import 'package:pay_by_verifi/screens/auth/email_confirmation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyapp/config/api.dart';
 import 'package:surveyapp/homeScreen.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:surveyapp/config/verifi_colors.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
 import 'package:surveyapp/custom_widgets/form_input_widget.dart';
 import 'package:surveyapp/models/authentication.dart';
-// import 'package:pay_by_verifi/screens/auth/activate.dart';
 import 'package:surveyapp/bloc/bloc.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:http/http.dart' as http;
-// import 'package:pay_by_verifi/screens/auth/finish_activate.dart';
-// import 'package:pay_by_verifi/screens/auth/forgot_password.dart';
-// import 'package:pay_by_verifi/screens/dashboard/dashboard.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Login extends StatefulWidget {
@@ -111,9 +104,11 @@ class _LoginState extends State<Login> {
           });
           return;
         }
-        print(decodedResponse);
+        // print(decodedResponse);
+        // print(decodedResponse['payload']['token']);
         // save user details and token in shared preferences
-        await Authentication.storeToken(decodedResponse['response']);
+        await Authentication.storeToken(
+            decodedResponse['payload']['token']);
 
         final _authenticationBloc =
             BlocProvider.of<AuthenticationBloc>(context);
