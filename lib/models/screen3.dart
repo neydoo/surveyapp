@@ -81,7 +81,7 @@ class _Screen3State extends State<Screen3> {
                           // margin: EdgeInsets.all(50),
                           padding: EdgeInsets.all(20),
                           child: Text(
-                              'How did you feel about the length of the play?',
+                              'Would you recommend the show to another person?',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 30,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surveyapp/bloc/bloc.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
 import 'package:surveyapp/homeScreen.dart';
 import 'package:surveyapp/config/api.dart';
@@ -9,6 +10,8 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:surveyapp/config/verifi_colors.dart';
 import 'package:location/location.dart';
+import 'package:path_provider/path_provider.dart';
+// import 'package:flutter/services.dart';
 // import '../questions.dart';
 
 class Screen5 extends StatefulWidget {
@@ -20,10 +23,11 @@ class Screen5 extends StatefulWidget {
 }
 
 class _Screen5State extends State<Screen5> {
+  // final connectionBloc = ConnectionBloc();
   Map answers = {};
   void initState() {
     super.initState();
-
+    // runCheck();
     location.onLocationChanged().listen((value) {
       setState(() {
         userLocation = value;
@@ -32,16 +36,15 @@ class _Screen5State extends State<Screen5> {
   }
 
   var location = new Location();
+  var connectionBloc = ConnectionBloc();
 
   Map<String, double> userLocation;
 
-  validateInput() {
+  validateInput() async {
     // print(widget.screen4Answer['name']);
     // print(widget.screen4Answer as String);
     // return false;
-    setState(() {
-      _error = "";
-    });
+    // connectionBloc.checkNetwork();
 
     if (widget.screen4Answer["screen5"] == null) {
       setState(() {
@@ -50,7 +53,23 @@ class _Screen5State extends State<Screen5> {
 
       return false;
     }
-    return save();
+    setState(() {
+      _error = "";
+      _loading = true;
+    });
+
+    if (connectionBloc.connected == true) {
+      print('hello---');
+      await upload();
+    } else {
+      // report();
+      print('hello1');
+      print(connectionBloc.connected);
+      await save();
+    }
+    setState(() {
+      _loading = false;
+    });
   }
 
   String _error = "";
@@ -76,9 +95,106 @@ class _Screen5State extends State<Screen5> {
     return Container();
   }
 
-  Future save() async {
-    // print(widget.screen4Answer);
+  runCheck() {
+    var oneSec = Duration(seconds: 3);
+    Timer.periodic(oneSec, (Timer t) async {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/survey.json');
+      bool fileExists = file.existsSync();
+      connectionBloc.dispatch(CheckInternet());
+      if (fileExists == true) {
+        submitOffline();
+      }
+      connectionBloc.dispatch(CheckInternet());
+    });
+    return null;
+  }
 
+  submitOffline() async {
+    // if (connectionBloc.connected == true) {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/survey.json');
+    List jsonContent = json.decode(file.readAsStringSync());
+
+    Map data = {
+      "answer1": '',
+      "answer2": '',
+      "answer3": '',
+      "answer4": '',
+      "answer5": '',
+      "fullName": '',
+      "play": '',
+      "email": '',
+      'lat': '',
+      'lng': ''
+    };
+
+    for (var i = 0; i < jsonContent.length; i++) {
+      data['answer1'] = jsonContent[i]['answer1'];
+      data['answer2'] = jsonContent[i]['answer2'];
+      data['answer3'] = jsonContent[i]['answer3'];
+      data['answer4'] = jsonContent[i]['answer4'];
+      data['answer5'] = jsonContent[i]['answer5'];
+      data['fullName'] = jsonContent[i]['fullName'];
+      data['play'] = jsonContent[i]['play'];
+      data['email'] = jsonContent[i]['email'];
+      data['lon'] = jsonContent[i]['lon'];
+      data['lat'] = jsonContent[i]['lat'];
+
+      try {
+        String token = await Authentication.getToken();
+
+        // print('saving offline');
+
+        http.Response response = await http.post(
+          API.save,
+          body: json.encode(data),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            HttpHeaders.authorizationHeader: "Bearer $token"
+          },
+        );
+
+        var decodedResponse = json.decode(response.body);
+        int statusCode = response.statusCode;
+        if (statusCode == 200) {
+          print(decodedResponse);
+
+          setState(() {
+            offlineList = [];
+          });
+        }
+      } catch (e) {
+        print("error: $e");
+      }
+    }
+    if (offlineList.length < 1) {
+      deleteFile();
+    }
+  }
+
+  readFile() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      print(directory.toString());
+      final file = File('${directory.path}/survey.json');
+      List jsonContent = json.decode(file.readAsStringSync());
+      setState(() {
+        offlineList = jsonContent;
+      });
+      print(offlineList);
+    } catch (e) {
+      print("Couldn't read file survey.json : $e");
+    }
+  }
+
+  deleteFile() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/survey.json');
+    // file.deleteSync(recursive: true);
+  }
+
+  save() async {
     Map<String, dynamic> inputData = {
       "answer1": widget.screen4Answer['screen1'],
       "answer2": widget.screen4Answer['screen2'],
@@ -92,10 +208,92 @@ class _Screen5State extends State<Screen5> {
       'lng': userLocation["longitude"].toString()
     };
 
+    surveyList.add(inputData);
+
+    // if (connectionBloc.connected == false) {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/survey.json');
+    bool fileExists = file.existsSync();
+
+    if (fileExists == true) {
+      print("File exists");
+      List jsonContent = json.decode(file.readAsStringSync());
+      jsonContent.add(inputData);
+      file.writeAsStringSync(json.encode(jsonContent));
+    } else {
+      file.writeAsStringSync(json.encode(surveyList));
+      print('saved survey.json');
+    }
+
+    setState(() {
+      _success = "Survey Saved!";
+    });
+
+    await readFile();
+    Navigator.of(context).pushReplacement(
+      new MaterialPageRoute(
+        builder: (context) => Home(),
+        settings: RouteSettings(name: 'Home'),
+      ),
+    );
+    // }
+  }
+
+  Widget successWidget() {
+    if (_success.length > 0) {
+      return Center(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 2,
+            ),
+            Text(
+              _success,
+              style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.green,
+                  fontFamily: "Lato"),
+            ),
+            SizedBox(
+              height: 15,
+            )
+          ],
+        ),
+      );
+    }
+    return Container();
+  }
+
+  List surveyList = [];
+  List offlineList = [];
+  String _success = '';
+  bool _loading = false;
+
+  Future upload() async {
+    Map<String, dynamic> inputData = {
+      "answer1": widget.screen4Answer['screen1'],
+      "answer2": widget.screen4Answer['screen2'],
+      "answer3": widget.screen4Answer['screen3'],
+      "answer4": widget.screen4Answer['screen4'],
+      "answer5": widget.screen4Answer['screen5'],
+      "fullName": widget.screen4Answer['name'],
+      "play": widget.screen4Answer['play'],
+      "email": widget.screen4Answer['email'],
+      'lat': userLocation["latitude"].toString(),
+      'lng': userLocation["longitude"].toString()
+    };
+    // print(widget.screen4Answer);
+
+    // if (connectionBloc.connected == true) {
+    setState(() {
+      _error = "";
+      _loading = true;
+    });
+
     try {
       String token = await Authentication.getToken();
-      print('here');
-      print(userLocation["longitude"].toString());
+
       http.Response response = await http.post(
         API.save,
         body: json.encode(inputData),
@@ -111,10 +309,15 @@ class _Screen5State extends State<Screen5> {
 
       if (statusCode != 200) {
         setState(() {
+          _loading = false;
           _error = decodedResponse['message'];
         });
         return;
       }
+      setState(() {
+        _loading = false;
+        _success = 'Survey Saved!';
+      });
       print(decodedResponse);
 
       // redirect to dashboard
@@ -130,6 +333,7 @@ class _Screen5State extends State<Screen5> {
       setState(() {
         _error = "An error occured";
       });
+      // }
     }
   }
 
@@ -323,7 +527,7 @@ class _Screen5State extends State<Screen5> {
                         ],
                       ),
                     ),
-                    errorWidget(),
+                    _success.length > 0 ? successWidget() : errorWidget(),
                     Container(
                       margin: EdgeInsets.all(50),
                       child: Row(
@@ -334,6 +538,7 @@ class _Screen5State extends State<Screen5> {
                             onTap: () => Navigator.pop(context),
                           ),
                           ButtonWidget(
+                              loadingState: _loading,
                               text: 'Submit',
                               onTap: () async {
                                 await validateInput();

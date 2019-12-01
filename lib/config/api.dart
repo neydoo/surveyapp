@@ -5,8 +5,8 @@ class API {
   static String _baseURL = DotEnv().env['ENDPOINT'];
 
   // auth endpoints
-  static String login = "https://9b5232c2.ngrok.io/" + "auth/login";
-  static String save = "https://9b5232c2.ngrok.io/" + "survey/create";
+  static String login = "https://1eb0edb7.ngrok.io/" + "auth/login";
+  static String save = "https://1eb0edb7.ngrok.io/" + "survey/create";
 
 /**keys for survey/create */
   // answer1
@@ -15,6 +15,7 @@ class API {
   // answer4
   // answer5
   // fullName
+  // email
   // lat
   // lon
   // play

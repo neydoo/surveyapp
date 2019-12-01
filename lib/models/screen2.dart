@@ -130,9 +130,9 @@ class _Screen2State extends State<Screen2> {
                           //     ),
                           GestureDetector(
                             onTap: () {
-                              setState((){
-                              _error = "";
-                            });
+                              setState(() {
+                                _error = "";
+                              });
                               widget.screen1Answer['screen2'] = "1";
                             },
                             child: Container(
@@ -158,9 +158,9 @@ class _Screen2State extends State<Screen2> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              setState((){
-                              _error = "";
-                            });
+                              setState(() {
+                                _error = "";
+                              });
                               widget.screen1Answer['screen2'] = "2";
                             },
                             child: Container(
@@ -186,9 +186,9 @@ class _Screen2State extends State<Screen2> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              setState((){
-                              _error = "";
-                            });
+                              setState(() {
+                                _error = "";
+                              });
                               widget.screen1Answer['screen2'] = "3";
                             },
                             child: Container(
@@ -215,10 +215,10 @@ class _Screen2State extends State<Screen2> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              setState((){
-                              _error = "";
-                            });
-                              widget.screen1Answer['screen2'] = "four";
+                              setState(() {
+                                _error = "";
+                              });
+                              widget.screen1Answer['screen2'] = "4";
                             },
                             child: Container(
                               height: 45,
@@ -244,10 +244,10 @@ class _Screen2State extends State<Screen2> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              setState((){
-                              _error = "";
-                            });
-                              widget.screen1Answer['screen2'] = "five";
+                              setState(() {
+                                _error = "";
+                              });
+                              widget.screen1Answer['screen2'] = "5";
                             },
                             child: Container(
                               height: 45,
