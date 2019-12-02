@@ -1,3 +1,4 @@
+import 'package:surveyapp/custom_widgets/verifi_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
 import 'package:surveyapp/models/screen3.dart';
@@ -96,10 +97,10 @@ class _Screen2State extends State<Screen2> {
                     Container(
                       width: double.infinity,
                       // margin: EdgeInsets.all(50),
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.only(top: 20, left: 40),
                       child: Row(
                         children: <Widget>[
-                          //     GestureDetector(
+                          //     VerifiTap(
                           //       onTap: () {
                           //   setState(){
                           //   _error = "";
@@ -128,7 +129,7 @@ class _Screen2State extends State<Screen2> {
                           //                 BorderRadius.all(Radius.circular(5))),
                           //       ),
                           //     ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -156,7 +157,7 @@ class _Screen2State extends State<Screen2> {
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -184,7 +185,7 @@ class _Screen2State extends State<Screen2> {
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -213,7 +214,7 @@ class _Screen2State extends State<Screen2> {
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -242,7 +243,7 @@ class _Screen2State extends State<Screen2> {
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -280,14 +281,20 @@ class _Screen2State extends State<Screen2> {
                       margin: EdgeInsets.all(50),
                       child: Row(
                         children: [
-                          ButtonWidget(
-                            danger: true,
-                            text: 'Back',
-                            onTap: () => Navigator.pop(context),
+                          Container(
+                            margin: EdgeInsets.only(right: 20, left: 30),
+                            child: ButtonWidget(
+                              danger: true,
+                              text: 'Back',
+                              onTap: () => Navigator.pop(context),
+                            ),
                           ),
-                          ButtonWidget(
-                            text: 'Next',
-                            onTap: () => validateInput(),
+                          Container(
+                            // margin: EdgeInsets.all(10),
+                            child: ButtonWidget(
+                              text: 'Next',
+                              onTap: () => validateInput(),
+                            ),
                           ),
                         ],
                       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
+import 'package:surveyapp/custom_widgets/verifi_tap.dart';
 import 'package:surveyapp/models/screen2.dart';
 import 'package:surveyapp/config/verifi_colors.dart';
 import 'package:location/location.dart';
@@ -17,7 +18,7 @@ class Screen1 extends StatefulWidget {
 class _Screen1State extends State<Screen1> {
   void initState() {
     super.initState();
-    
+
     location.onLocationChanged().listen((value) {
       setState(() {
         userLocation = value;
@@ -25,9 +26,9 @@ class _Screen1State extends State<Screen1> {
     });
   }
 
-var location = new Location();
+  var location = new Location();
 
-Map<String, double> userLocation;
+  Map<String, double> userLocation;
 
   // Map answers = {};
   validateInput() {
@@ -85,7 +86,7 @@ Map<String, double> userLocation;
                   children: [
                     Container(
                       padding: EdgeInsets.all(20),
-                      height: 240,
+                      height: 200,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: Color.fromRGBO(136, 14, 79, 1),
@@ -114,12 +115,12 @@ Map<String, double> userLocation;
                       padding: EdgeInsets.all(20),
                       child: Row(
                         children: <Widget>[
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {});
-                              setState((){
-                              _error = "";
-                            });
+                              setState(() {
+                                _error = "";
+                              });
                               widget.answers['screen1'] = "1";
                             },
                             child: Container(
@@ -144,12 +145,12 @@ Map<String, double> userLocation;
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {});
-                              setState((){
-                              _error = "";
-                            });
+                              setState(() {
+                                _error = "";
+                              });
                               widget.answers['screen1'] = "2";
                             },
                             child: Container(
@@ -174,11 +175,11 @@ Map<String, double> userLocation;
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
-                              setState((){
-                              _error = "";
-                            });
+                              setState(() {
+                                _error = "";
+                              });
                               widget.answers['screen1'] = "3";
                             },
                             child: Container(
@@ -203,11 +204,11 @@ Map<String, double> userLocation;
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
-                              setState((){
-                              _error = "";
-                            });
+                              setState(() {
+                                _error = "";
+                              });
                               widget.answers['screen1'] = "4";
                             },
                             child: Container(
@@ -232,11 +233,11 @@ Map<String, double> userLocation;
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
-                              setState((){
-                              _error = "";
-                            });
+                              setState(() {
+                                _error = "";
+                              });
                               widget.answers['screen1'] = "5";
                             },
                             child: Container(
@@ -265,23 +266,27 @@ Map<String, double> userLocation;
                         ],
                       ),
                     ),
-                    // Container(
-                    //   margin: EdgeInsets.all(50),
-                    // child:
+
                     errorWidget(),
                     // ),
                     Container(
-                      margin: EdgeInsets.all(50),
+                      margin: EdgeInsets.all(30),
                       child: Row(
                         children: [
-                          ButtonWidget(
-                            danger: true,
-                            text: 'Back',
-                            onTap: () => Navigator.pop(context),
+                          Container(
+                            margin: EdgeInsets.only(left: 40, right: 20),
+                            child: ButtonWidget(
+                              danger: true,
+                              text: 'Back',
+                              onTap: () => Navigator.pop(context),
+                            ),
                           ),
-                          ButtonWidget(
-                            text: 'Next',
-                            onTap: () => validateInput(),
+                          Container(
+                            // margin: EdgeInsets.all(10),
+                            child: ButtonWidget(
+                              text: 'Next',
+                              onTap: () => validateInput(),
+                            ),
                           ),
                         ],
                       ),

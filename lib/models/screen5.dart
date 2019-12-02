@@ -1,3 +1,4 @@
+import 'package:surveyapp/custom_widgets/verifi_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:surveyapp/bloc/bloc.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
@@ -27,7 +28,6 @@ class _Screen5State extends State<Screen5> {
   Map answers = {};
   void initState() {
     super.initState();
-    // runCheck();
     location.onLocationChanged().listen((value) {
       setState(() {
         userLocation = value;
@@ -58,13 +58,12 @@ class _Screen5State extends State<Screen5> {
       _loading = true;
     });
 
-    if (connectionBloc.connected == true) {
+    final result = await InternetAddress.lookup('google.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       print('hello---');
       await upload();
     } else {
-      // report();
       print('hello1');
-      print(connectionBloc.connected);
       await save();
     }
     setState(() {
@@ -95,84 +94,6 @@ class _Screen5State extends State<Screen5> {
     return Container();
   }
 
-  runCheck() {
-    var oneSec = Duration(seconds: 3);
-    Timer.periodic(oneSec, (Timer t) async {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/survey.json');
-      bool fileExists = file.existsSync();
-      connectionBloc.dispatch(CheckInternet());
-      if (fileExists == true) {
-        submitOffline();
-      }
-      connectionBloc.dispatch(CheckInternet());
-    });
-    return null;
-  }
-
-  submitOffline() async {
-    // if (connectionBloc.connected == true) {
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/survey.json');
-    List jsonContent = json.decode(file.readAsStringSync());
-
-    Map data = {
-      "answer1": '',
-      "answer2": '',
-      "answer3": '',
-      "answer4": '',
-      "answer5": '',
-      "fullName": '',
-      "play": '',
-      "email": '',
-      'lat': '',
-      'lng': ''
-    };
-
-    for (var i = 0; i < jsonContent.length; i++) {
-      data['answer1'] = jsonContent[i]['answer1'];
-      data['answer2'] = jsonContent[i]['answer2'];
-      data['answer3'] = jsonContent[i]['answer3'];
-      data['answer4'] = jsonContent[i]['answer4'];
-      data['answer5'] = jsonContent[i]['answer5'];
-      data['fullName'] = jsonContent[i]['fullName'];
-      data['play'] = jsonContent[i]['play'];
-      data['email'] = jsonContent[i]['email'];
-      data['lon'] = jsonContent[i]['lon'];
-      data['lat'] = jsonContent[i]['lat'];
-
-      try {
-        String token = await Authentication.getToken();
-
-        // print('saving offline');
-
-        http.Response response = await http.post(
-          API.save,
-          body: json.encode(data),
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: "Bearer $token"
-          },
-        );
-
-        var decodedResponse = json.decode(response.body);
-        int statusCode = response.statusCode;
-        if (statusCode == 200) {
-          print(decodedResponse);
-
-          setState(() {
-            offlineList = [];
-          });
-        }
-      } catch (e) {
-        print("error: $e");
-      }
-    }
-    if (offlineList.length < 1) {
-      deleteFile();
-    }
-  }
-
   readFile() async {
     try {
       final directory = await getApplicationDocumentsDirectory();
@@ -186,12 +107,6 @@ class _Screen5State extends State<Screen5> {
     } catch (e) {
       print("Couldn't read file survey.json : $e");
     }
-  }
-
-  deleteFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/survey.json');
-    // file.deleteSync(recursive: true);
   }
 
   save() async {
@@ -209,8 +124,6 @@ class _Screen5State extends State<Screen5> {
     };
 
     surveyList.add(inputData);
-
-    // if (connectionBloc.connected == false) {
     final directory = await getApplicationDocumentsDirectory();
     final file = File('${directory.path}/survey.json');
     bool fileExists = file.existsSync();
@@ -226,16 +139,21 @@ class _Screen5State extends State<Screen5> {
     }
 
     setState(() {
+      _loading = false;
       _success = "Survey Saved!";
     });
 
     await readFile();
-    Navigator.of(context).pushReplacement(
-      new MaterialPageRoute(
-        builder: (context) => Home(),
-        settings: RouteSettings(name: 'Home'),
-      ),
-    );
+    var oneSec = Duration(seconds: 3);
+    Timer.periodic(oneSec, (Timer t) async {
+      Navigator.of(context).pushReplacement(
+        new MaterialPageRoute(
+          builder: (context) => Home(),
+          settings: RouteSettings(name: 'Home'),
+        ),
+      );
+    });
+
     // }
   }
 
@@ -283,9 +201,6 @@ class _Screen5State extends State<Screen5> {
       'lat': userLocation["latitude"].toString(),
       'lng': userLocation["longitude"].toString()
     };
-    // print(widget.screen4Answer);
-
-    // if (connectionBloc.connected == true) {
     setState(() {
       _error = "";
       _loading = true;
@@ -320,18 +235,20 @@ class _Screen5State extends State<Screen5> {
       });
       print(decodedResponse);
 
-      // redirect to dashboard
-      Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(
-          builder: (context) => Home(),
-          settings: RouteSettings(name: 'Home'),
-        ),
-      );
+      var oneSec = Duration(seconds: 3);
+      Timer.periodic(oneSec, (Timer t) async {
+        Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(
+            builder: (context) => Home(),
+            settings: RouteSettings(name: 'Home'),
+          ),
+        );
+      });
     } catch (e) {
       print(e);
-      // set error
       setState(() {
         _error = "An error occured";
+        _loading = false;
       });
       // }
     }
@@ -380,7 +297,7 @@ class _Screen5State extends State<Screen5> {
                       padding: EdgeInsets.all(20),
                       child: Row(
                         children: <Widget>[
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -408,7 +325,7 @@ class _Screen5State extends State<Screen5> {
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -436,7 +353,7 @@ class _Screen5State extends State<Screen5> {
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -465,7 +382,7 @@ class _Screen5State extends State<Screen5> {
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -494,7 +411,7 @@ class _Screen5State extends State<Screen5> {
                                       BorderRadius.all(Radius.circular(5))),
                             ),
                           ),
-                          GestureDetector(
+                          VerifiTap(
                             onTap: () {
                               setState(() {
                                 _error = "";
@@ -532,17 +449,26 @@ class _Screen5State extends State<Screen5> {
                       margin: EdgeInsets.all(50),
                       child: Row(
                         children: [
-                          ButtonWidget(
-                            danger: true,
-                            text: 'Back',
-                            onTap: () => Navigator.pop(context),
+                          _loading == false
+                              ? Container(
+                                  margin: EdgeInsets.only(right: 10, left: 30),
+                                  child: ButtonWidget(
+                                    danger: true,
+                                    text: 'Back',
+                                    onTap: () => Navigator.pop(context),
+                                  ),
+                                )
+                              : Container(
+                                  margin: EdgeInsets.only(top: 10, left: 80),
+                                  child: Container()),
+                          Container(
+                            child: ButtonWidget(
+                                loadingState: _loading,
+                                text: 'Submit',
+                                onTap: () async {
+                                  await validateInput();
+                                }),
                           ),
-                          ButtonWidget(
-                              loadingState: _loading,
-                              text: 'Submit',
-                              onTap: () async {
-                                await validateInput();
-                              }),
                         ],
                       ),
                     ),

@@ -28,8 +28,8 @@ class _HomeState extends State<Home> {
   var connectionBloc = ConnectionBloc();
 
   runCheck() {
-    var oneSec = Duration(seconds: 15);
     print('start running check-');
+    var oneSec = Duration(seconds: 15);
     Timer.periodic(oneSec, (Timer t) async {
       final directory = await getApplicationDocumentsDirectory();
       final file = File('${directory.path}/survey.json');

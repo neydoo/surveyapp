@@ -1,3 +1,4 @@
+import 'package:surveyapp/custom_widgets/verifi_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
 import 'package:surveyapp/models/screen5.dart';
@@ -104,7 +105,7 @@ class _Screen4State extends State<Screen4> {
                             padding: EdgeInsets.all(20),
                             child: Row(
                               children: <Widget>[
-                                GestureDetector(
+                                VerifiTap(
                                   onTap: () {
                                     setState(() {
                                       _error = "";
@@ -134,7 +135,7 @@ class _Screen4State extends State<Screen4> {
                                             Radius.circular(5))),
                                   ),
                                 ),
-                                GestureDetector(
+                                VerifiTap(
                                   onTap: () {
                                     setState(() {
                                       _error = "";
@@ -164,7 +165,7 @@ class _Screen4State extends State<Screen4> {
                                             Radius.circular(5))),
                                   ),
                                 ),
-                                GestureDetector(
+                                VerifiTap(
                                   onTap: () {
                                     setState(() {
                                       _error = "";
@@ -200,16 +201,23 @@ class _Screen4State extends State<Screen4> {
                           ),
                           errorWidget(),
                           Container(
-                            margin: EdgeInsets.all(50),
+                            margin: EdgeInsets.all(30),
                             child: Row(
                               children: [
-                                ButtonWidget(
-                                  danger: true,
-                                  text: 'Back',
-                                  onTap: () => Navigator.pop(context),
+                                Container(
+                                  margin: EdgeInsets.only(left: 40,right: 20),
+                                  child: ButtonWidget(
+                                    danger: true,
+                                    text: 'Back',
+                                    onTap: () => Navigator.pop(context),
+                                  ),
                                 ),
-                                ButtonWidget(
-                                    text: 'Next', onTap: () => validateInput()),
+                                Container(
+                                  child: ButtonWidget(
+                                    text: 'Next',
+                                    onTap: () => validateInput(),
+                                  ),
+                                )
                               ],
                             ),
                           ),
