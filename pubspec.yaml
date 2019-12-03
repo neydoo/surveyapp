@@ -33,7 +33,7 @@ dependencies:
   graphql_flutter: ^1.0.0
   location: ^1.4.1
   splashscreen:
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

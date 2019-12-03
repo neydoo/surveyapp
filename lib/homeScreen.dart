@@ -1,15 +1,17 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 // import 'package:surveyapp/homeScreen.dart';
 import 'package:surveyapp/config/api.dart';
 import 'package:surveyapp/models/authentication.dart';
 import 'dart:convert';
 import 'dart:async';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 // import 'package:surveyapp/config/verifi_colors.dart';
 // import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:surveyapp/models/login.dart';
 import 'package:surveyapp/models/user_data.dart';
 import 'package:surveyapp/bloc/connection_bloc.dart';
 import 'package:surveyapp/bloc/connection_event.dart';
@@ -142,7 +144,7 @@ class _HomeState extends State<Home> {
     final file = File('${directory.path}/survey.json');
     file.deleteSync(recursive: true);
     setState(() {
-      deletable = true;
+      deletable = false;
     });
   }
 
@@ -157,14 +159,36 @@ class _HomeState extends State<Home> {
               title: Text('Survey App'),
             ),
             body: Center(
-              child: RaisedButton(
-                child: Text('Take Survey'),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (BuildContext context) => User()),
+                child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 250),
+                  child: RaisedButton(
+                    child: Text('Take Survey'),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => User()),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                  child: FlatButton(
+                    child: Text("Logout >>"),
+                    onPressed: () async {
+                      await Authentication.logout();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => Login(),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            )),
           ),
         ),
         onWillPop: () {

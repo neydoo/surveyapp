@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:surveyapp/config/api.dart';
 import 'package:surveyapp/homeScreen.dart';
@@ -107,8 +109,7 @@ class _LoginState extends State<Login> {
         // print(decodedResponse);
         // print(decodedResponse['payload']['token']);
         // save user details and token in shared preferences
-        await Authentication.storeToken(
-            decodedResponse['payload']['token']);
+        await Authentication.storeToken(decodedResponse['payload']['token']);
 
         final _authenticationBloc =
             BlocProvider.of<AuthenticationBloc>(context);
@@ -179,126 +180,130 @@ class _LoginState extends State<Login> {
     return Container();
   }
 
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: true,
-      body: FormKeyboardActions(
-        keyboardActionsPlatform: KeyboardActionsPlatform.ALL, //optional
-        keyboardBarColor: Colors.grey[200],
-        nextFocus: true,
-        actions: [
-          KeyboardAction(
-            focusNode: _nodeText1,
-          ),
-          KeyboardAction(
-            focusNode: _nodeText2,
-          ),
-        ],
-        child: Stack(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/img/png/full-bg.png"),
-                      fit: BoxFit.cover)),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0),
-                  ),
+    return WillPopScope(
+        child: Scaffold(
+          resizeToAvoidBottomPadding: true,
+          body: FormKeyboardActions(
+            keyboardActionsPlatform: KeyboardActionsPlatform.ALL, //optional
+            keyboardBarColor: Colors.grey[200],
+            nextFocus: true,
+            actions: [
+              KeyboardAction(
+                focusNode: _nodeText1,
+              ),
+              KeyboardAction(
+                focusNode: _nodeText2,
+              ),
+            ],
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/img/png/full-bg.png"),
+                          fit: BoxFit.cover)),
                 ),
-                child: SingleChildScrollView(
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 250),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Login",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16.0,
-                            fontFamily: "Poppins",
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                        FormInputWidget(
-                          label: "Email",
-                          onChanged: (text) {
-                            if (text.length >= 1) {
-                              return setState(() {
-                                _phoneError = "";
-                              });
-                            }
-                            return setState(() {
-                              _phoneError = "Fill up your email";
-                            });
-                          },
-                          controller: email,
-                          keyboardType: TextInputType.emailAddress,
-                          node: _nodeText1,
-                        ),
-                        phoneErrorWidget(),
-                        SizedBox(
-                          height: 13.0,
-                        ),
-                        FormInputWidget(
-                            label: "Password",
-                            controller: password,
-                            onChanged: (text) {
-                              if (text.length >= 1) {
+                    padding:
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 30),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: 250),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Login",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.0,
+                                fontFamily: "Poppins",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            FormInputWidget(
+                              label: "Email",
+                              onChanged: (text) {
+                                if (text.length >= 1) {
+                                  return setState(() {
+                                    _phoneError = "";
+                                  });
+                                }
                                 return setState(() {
-                                  _error = "";
+                                  _phoneError = "Fill up your email";
                                 });
-                              }
-                              return setState(() {
-                                _error = "Fill up your password";
-                              });
-                            },
-                            password: true,
-                            node: _nodeText2),
-                        errorWidget(),
-                        SizedBox(
-                          height: 4.0,
+                              },
+                              controller: email,
+                              keyboardType: TextInputType.emailAddress,
+                              node: _nodeText1,
+                            ),
+                            phoneErrorWidget(),
+                            SizedBox(
+                              height: 13.0,
+                            ),
+                            FormInputWidget(
+                                label: "Password",
+                                controller: password,
+                                onChanged: (text) {
+                                  if (text.length >= 1) {
+                                    return setState(() {
+                                      _error = "";
+                                    });
+                                  }
+                                  return setState(() {
+                                    _error = "Fill up your password";
+                                  });
+                                },
+                                password: true,
+                                node: _nodeText2),
+                            errorWidget(),
+                            SizedBox(
+                              height: 4.0,
+                            ),
+                            SizedBox(
+                              height: 16.0,
+                            ),
+                            ButtonWidget(
+                                text: "LOGIN",
+                                loadingState: loading,
+                                onTap: () async {
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  await loginUser();
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                }),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 16.0,
-                        ),
-                        ButtonWidget(
-                            text: "LOGIN",
-                            loadingState: loading,
-                            onTap: () async {
-                              setState(() {
-                                loading = true;
-                              });
-                              await loginUser();
-                              setState(() {
-                                loading = false;
-                              });
-                            }),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
+        onWillPop: () {
+          return SystemNavigator.pop();
+        });
   }
 }

@@ -5,9 +5,8 @@ class API {
   static String _baseURL = DotEnv().env['ENDPOINT'];
 
   // auth endpoints
-  static String login = "https://surveyapi-test.herokuapp.com/" + "auth/login";
-  static String save =
-      "https://surveyapi-test.herokuapp.com/" + "survey/create";
+  static String login = "https://surveyapi-test.herokuapp.com/auth/login";
+  static String save = "https://surveyapi-test.herokuapp.com/survey/create";
 
 /**keys for survey/create */
   // answer1

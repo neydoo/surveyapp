@@ -1,13 +1,14 @@
-import 'package:surveyapp/custom_widgets/verifi_tap.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:surveyapp/models/authentication.dart';
+import 'package:surveyapp/custom_widgets/verifi_tap.dart';
 import 'package:surveyapp/bloc/bloc.dart';
 import 'package:surveyapp/custom_widgets/button_widget.dart';
 import 'package:surveyapp/homeScreen.dart';
 import 'package:surveyapp/config/api.dart';
-import 'package:surveyapp/models/authentication.dart';
-import 'dart:convert';
-import 'dart:async';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:surveyapp/config/verifi_colors.dart';
 import 'package:location/location.dart';
@@ -57,18 +58,30 @@ class _Screen5State extends State<Screen5> {
       _error = "";
       _loading = true;
     });
-
-    final result = await InternetAddress.lookup('google.com');
-    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-      print('hello---');
-      await upload();
-    } else {
-      print('hello1');
-      await save();
+    try {
+      if (connectionBloc.connected == true) {
+        print('hello---');
+        await upload();
+        setState(() {
+          _loading = false;
+        });
+      } else {
+        print('hello1');
+        await save();
+        setState(() {
+          _loading = false;
+        });
+      }
+      setState(() {
+        _loading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _loading = false;
+        _error = "An error occurred";
+      });
     }
-    setState(() {
-      _loading = false;
-    });
+    // final result = await InternetAddress.lookup('google.com');
   }
 
   String _error = "";
@@ -311,7 +324,8 @@ class _Screen5State extends State<Screen5> {
                               decoration: BoxDecoration(
                                   // color: VerifiColors.blue,
                                   image: DecorationImage(
-                                    image: AssetImage("assets/img/png/one.png"),
+                                    image: AssetImage(
+                                        "assets/img/png/emoji_1.png"),
                                     fit: BoxFit.cover,
                                   ),
                                   boxShadow: [
@@ -339,7 +353,8 @@ class _Screen5State extends State<Screen5> {
                               decoration: BoxDecoration(
                                   // color: VerifiColors.blue,
                                   image: DecorationImage(
-                                    image: AssetImage("assets/img/png/two.png"),
+                                    image: AssetImage(
+                                        "assets/img/png/emoji_2.png"),
                                     fit: BoxFit.cover,
                                   ),
                                   boxShadow: [
@@ -367,8 +382,8 @@ class _Screen5State extends State<Screen5> {
                               decoration: BoxDecoration(
                                   // color: VerifiColors.blue,
                                   image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/img/png/three.png"),
+                                    image: AssetImage(
+                                        "assets/img/png/emoji_3.png"),
                                     fit: BoxFit.cover,
                                   ),
                                   boxShadow: [
@@ -396,8 +411,8 @@ class _Screen5State extends State<Screen5> {
                               decoration: BoxDecoration(
                                   // color: VerifiColors.blue,
                                   image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/img/png/four.png"),
+                                    image: AssetImage(
+                                        "assets/img/png/emoji_4.png"),
                                     fit: BoxFit.cover,
                                   ),
                                   boxShadow: [
@@ -425,8 +440,8 @@ class _Screen5State extends State<Screen5> {
                               decoration: BoxDecoration(
                                   // color: VerifiColors.blue,
                                   image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/img/png/five.png"),
+                                    image: AssetImage(
+                                        "assets/img/png/emoji_5.png"),
                                     fit: BoxFit.cover,
                                   ),
                                   boxShadow: [
