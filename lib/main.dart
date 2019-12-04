@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'package:surveyapp/models/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surveyapp/config/verifi_colors.dart';
@@ -38,9 +39,37 @@ class _SurveyState extends State<Survey> {
           return Scaffold();
         } else if (state is LoadedAuthState) {
           if (state.auth) {
-            return Home();
+            return Container(
+              color: Colors.white,
+              padding: EdgeInsets.only(top: 200),
+              child: SplashScreen(
+                seconds: 5,
+                navigateAfterSeconds: Home(),
+                backgroundColor: Colors.white,
+                loaderColor: Colors.white,
+                image: new Image.asset(
+                  'assets/img/png/corona.jpg',
+                  height: MediaQuery.of(context).size.height * 4.921,
+                  width: MediaQuery.of(context).size.width * 4.921,
+                ),
+              ),
+            );
           }
-          return Login();
+          return Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(top: 200),
+            child: SplashScreen(
+              seconds: 5,
+              navigateAfterSeconds: Login(),
+              loaderColor: Colors.white,
+              backgroundColor: Colors.white,
+              image: new Image.asset(
+                'assets/img/png/corona.jpg',
+                height: MediaQuery.of(context).size.height * 4.921,
+                width: MediaQuery.of(context).size.width * 4.921,
+              ),
+            ),
+          );
         }
       },
     );
@@ -55,22 +84,8 @@ class AppMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // WidgetsBinding.instance.addPostFrameCallback((_) => initMethod(context));
     final HttpLink httpLink = HttpLink(
       uri: 'https://700f317a.ngrok.io/graphql',
-    );
-
-    final AuthLink authLink = AuthLink(
-      getToken: () async => await Authentication.getToken(),
-    );
-
-    final Link link = authLink.concat(httpLink as Link);
-
-    ValueNotifier<GraphQLClient> client = ValueNotifier(
-      GraphQLClient(
-        cache: InMemoryCache(),
-        link: link,
-      ),
     );
     return MultiBlocProvider(
       providers: [
@@ -78,12 +93,7 @@ class AppMain extends StatelessWidget {
           builder: (BuildContext context) => AuthenticationBloc(),
         ),
       ],
-      
-      child:
-          GraphQLProvider(
-            client: client,
-          child:
-          MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Survey App",
         theme: ThemeData(
@@ -94,8 +104,6 @@ class AppMain extends StatelessWidget {
             hintColor: VerifiColors.blue,
             fontFamily: 'Lato'),
         home: Survey(),
-        
-      ),
       ),
     );
   }

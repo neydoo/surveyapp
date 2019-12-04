@@ -63,8 +63,11 @@ class _Screen4State extends State<Screen4> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Survey App'),
+        ),
         body: Container(
-          margin: EdgeInsets.only(top: 50),
+          margin: EdgeInsets.only(top: 20),
           child: Column(
             children: <Widget>[
               Column(
@@ -75,7 +78,7 @@ class _Screen4State extends State<Screen4> {
                         Column(children: [
                           Container(
                             padding: EdgeInsets.all(20),
-                            height: 240,
+                            height: MediaQuery.of(context).size.height * 0.22,
                             child: DecoratedBox(
                               decoration: BoxDecoration(
                                 color: Color.fromRGBO(136, 14, 79, 1),
@@ -113,7 +116,7 @@ class _Screen4State extends State<Screen4> {
                                     widget.screen3Answer['screen4'] = '1';
                                   },
                                   child: Container(
-                                    height: 50,
+                                    height: MediaQuery.of(context).size.height * 0.07,
                                     margin: EdgeInsets.all(25),
                                     width: MediaQuery.of(context).size.width *
                                         0.145,
@@ -143,7 +146,7 @@ class _Screen4State extends State<Screen4> {
                                     widget.screen3Answer['screen4'] = '2';
                                   },
                                   child: Container(
-                                    height: 52,
+                                    height: MediaQuery.of(context).size.height * 0.07,
                                     margin: EdgeInsets.all(25),
                                     width: MediaQuery.of(context).size.width *
                                         0.145,
@@ -173,7 +176,7 @@ class _Screen4State extends State<Screen4> {
                                     widget.screen3Answer['screen4'] = '3';
                                   },
                                   child: Container(
-                                    height: 52,
+                                    height: MediaQuery.of(context).size.height * 0.07,
                                     margin: EdgeInsets.all(25),
                                     width: MediaQuery.of(context).size.width *
                                         0.145,

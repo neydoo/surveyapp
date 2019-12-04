@@ -61,8 +61,11 @@ class _Screen2State extends State<Screen2> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Survey App'),
+        ),
         body: Container(
-          margin: EdgeInsets.only(top: 50),
+          margin: EdgeInsets.only(top: 20),
           child: Column(
             children: [
               Container(
@@ -70,7 +73,7 @@ class _Screen2State extends State<Screen2> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(20),
-                      height: 240,
+                      height: MediaQuery.of(context).size.height * 0.22,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: Color.fromRGBO(136, 14, 79, 1),
@@ -100,35 +103,6 @@ class _Screen2State extends State<Screen2> {
                       padding: EdgeInsets.only(top: 20, left: 40),
                       child: Row(
                         children: <Widget>[
-                          //     VerifiTap(
-                          //       onTap: () {
-                          //   setState(){
-                          //   _error = "";
-                          // }
-                          //         widget.screen1Answer['screen2'] = "zero";
-                          //       },
-                          //       child: Container(
-                          //         height: 45,
-                          //         margin: EdgeInsets.all(5),
-                          //         width: MediaQuery.of(context).size.width * 0.120,
-                          //         decoration: BoxDecoration(
-                          //             // color: VerifiColors.blue,
-                          //             image: DecorationImage(
-                          //               image:
-                          //                   AssetImage("assets/img/png/zero.png"),
-                          //               fit: BoxFit.cover,
-                          //             ),
-                          //             boxShadow: [
-                          //               BoxShadow(
-                          //                 color: Color.fromRGBO(0, 0, 0, 0.1),
-                          //                 blurRadius: 19.5,
-                          //                 offset: Offset(0, 6),
-                          //               )
-                          //             ],
-                          //             borderRadius:
-                          //                 BorderRadius.all(Radius.circular(5))),
-                          //       ),
-                          //     ),
                           VerifiTap(
                             onTap: () {
                               setState(() {
@@ -137,7 +111,7 @@ class _Screen2State extends State<Screen2> {
                               widget.screen1Answer['screen2'] = "1";
                             },
                             child: Container(
-                              height: 45,
+                              height: MediaQuery.of(context).size.height * 0.07,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.120,
                               decoration: BoxDecoration(
@@ -165,7 +139,7 @@ class _Screen2State extends State<Screen2> {
                               widget.screen1Answer['screen2'] = "2";
                             },
                             child: Container(
-                              height: 45,
+                              height: MediaQuery.of(context).size.height * 0.07,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.120,
                               decoration: BoxDecoration(
@@ -193,7 +167,7 @@ class _Screen2State extends State<Screen2> {
                               widget.screen1Answer['screen2'] = "3";
                             },
                             child: Container(
-                              height: 45,
+                              height: MediaQuery.of(context).size.height * 0.07,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.120,
                               decoration: BoxDecoration(
@@ -222,7 +196,7 @@ class _Screen2State extends State<Screen2> {
                               widget.screen1Answer['screen2'] = "4";
                             },
                             child: Container(
-                              height: 45,
+                              height: MediaQuery.of(context).size.height * 0.07,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.120,
                               decoration: BoxDecoration(
@@ -251,7 +225,7 @@ class _Screen2State extends State<Screen2> {
                               widget.screen1Answer['screen2'] = "5";
                             },
                             child: Container(
-                              height: 45,
+                              height: MediaQuery.of(context).size.height * 0.07,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.120,
                               decoration: BoxDecoration(

@@ -106,19 +106,20 @@ class _HomeState extends State<Home> {
           int statusCode = response.statusCode;
           if (statusCode == 200) {
             print(decodedResponse);
-
-            setState(() {
-              offlineList = [];
-              deletable = true;
-            });
+            // jsonCon
+            jsonContent.remove(jsonContent[i]);
+            print('-------------------------------');
+            print(jsonContent.length);
+            if (jsonContent.length <= 1) {
+              deleteFile();
+              setState(() {
+                offlineList = [];
+              });
+            }
           }
         } catch (e) {
           print("error: $e");
         }
-      }
-      if (deletable == true) {
-        deleteFile();
-        print('done sending offline data');
       }
     }
   }
