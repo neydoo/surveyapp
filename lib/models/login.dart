@@ -199,10 +199,7 @@ class _LoginState extends State<Login> {
             child: Stack(
               children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/img/png/full-bg.png"),
-                          fit: BoxFit.cover)),
+                  
                 ),
                 Positioned(
                   bottom: 0,

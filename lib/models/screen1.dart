@@ -15,9 +15,18 @@ class Screen1 extends StatefulWidget {
   _Screen1State createState() => _Screen1State();
 }
 
-class _Screen1State extends State<Screen1> {
+class _Screen1State extends State<Screen1> with TickerProviderStateMixin {
+  Animation<double> _scaleAnimation;
+  AnimationController _animationController;
+
   void initState() {
     super.initState();
+
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+
+    _scaleAnimation =
+        Tween<double>(begin: 1, end: 2).animate(_animationController);
 
     location.onLocationChanged().listen((value) {
       setState(() {
@@ -25,6 +34,12 @@ class _Screen1State extends State<Screen1> {
       });
     });
   }
+
+  bool smiley1 = false;
+  bool smiley2 = false;
+  bool smiley3 = false;
+  bool smiley4 = false;
+  bool smiley5 = false;
 
   var location = new Location();
 
@@ -117,52 +132,59 @@ class _Screen1State extends State<Screen1> {
                         children: <Widget>[
                           VerifiTap(
                             onTap: () {
-                              setState(() {});
                               setState(() {
                                 _error = "";
+                                smiley1 = true;
+                                smiley2 = false;
+                                smiley3 = false;
+                                smiley4 = false;
+                                smiley5 = false;
                               });
                               widget.answers['screen1'] = "1";
                             },
-                            child: Container(
-                              height: 50,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 150),
+                              height: smiley1 == false ? 50 : 80,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.145,
                               decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/img/png/emoji_1.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                                image: DecorationImage(
+                                  image:
+                                      AssetImage("assets/img/png/emoji_1.png"),
+                                  fit: BoxFit.contain,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.1),
+                                    blurRadius: 19.5,
+                                    offset: Offset(0, 6),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           VerifiTap(
                             onTap: () {
-                              setState(() {});
                               setState(() {
                                 _error = "";
+                                smiley1 = false;
+                                smiley2 = true;
+                                smiley3 = false;
+                                smiley4 = false;
+                                smiley5 = false;
                               });
                               widget.answers['screen1'] = "2";
                             },
-                            child: Container(
-                              height: 52,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 150),
+                              height: smiley2 == false ? 50 : 80,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.145,
                               decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
                                   image: DecorationImage(
                                     image: AssetImage(
                                         "assets/img/png/emoji_2.png"),
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
@@ -179,19 +201,24 @@ class _Screen1State extends State<Screen1> {
                             onTap: () {
                               setState(() {
                                 _error = "";
+                                smiley1 = false;
+                                smiley2 = false;
+                                smiley3 = true;
+                                smiley4 = false;
+                                smiley5 = false;
                               });
                               widget.answers['screen1'] = "3";
                             },
-                            child: Container(
-                              height: 52,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 150),
+                              height: smiley3 == false ? 50 : 80,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.145,
                               decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
                                   image: DecorationImage(
                                     image: AssetImage(
                                         "assets/img/png/emoji_3.png"),
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
@@ -208,19 +235,24 @@ class _Screen1State extends State<Screen1> {
                             onTap: () {
                               setState(() {
                                 _error = "";
+                                smiley1 = false;
+                                smiley2 = false;
+                                smiley3 = false;
+                                smiley4 = true;
+                                smiley5 = false;
                               });
                               widget.answers['screen1'] = "4";
                             },
-                            child: Container(
-                              height: 52,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 150),
+                              height: smiley4 == false ? 50 : 80,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.145,
                               decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
                                   image: DecorationImage(
                                     image: AssetImage(
                                         "assets/img/png/emoji_4.png"),
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
@@ -237,19 +269,24 @@ class _Screen1State extends State<Screen1> {
                             onTap: () {
                               setState(() {
                                 _error = "";
+                                smiley1 = false;
+                                smiley2 = false;
+                                smiley3 = false;
+                                smiley4 = false;
+                                smiley5 = true;
                               });
                               widget.answers['screen1'] = "5";
                             },
-                            child: Container(
-                              height: 52,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 150),
+                              height: smiley5 == false ? 50 : 80,
                               margin: EdgeInsets.all(5),
                               width: MediaQuery.of(context).size.width * 0.145,
                               decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
                                   image: DecorationImage(
                                     image: AssetImage(
                                         "assets/img/png/emoji_5.png"),
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
                                   ),
                                   boxShadow: [
                                     BoxShadow(

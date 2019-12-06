@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
   var connectionBloc = ConnectionBloc();
 
   runCheck() {
-    print('start running check-');
+    // print('start running check-');
     var oneSec = Duration(seconds: 15);
     Timer.periodic(oneSec, (Timer t) async {
       final directory = await getApplicationDocumentsDirectory();
@@ -45,8 +45,8 @@ class _HomeState extends State<Home> {
           submitOffline();
         }
         if (fileExists == false) {
-          print("file doesn't exists");
-          print('done with check- no file');
+          // print("file doesn't exists");
+          // print('done with check- no file');
           // submitOffline();
         }
       }
