@@ -274,236 +274,519 @@ class _Screen5State extends State<Screen5> {
     super.dispose();
   }
 
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Survey App'),
-        ),
-        body: Container(
-          margin: EdgeInsets.only(top: 20),
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(20),
-                      height: MediaQuery.of(context).size.height * 0.22,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(136, 14, 79, 1),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          // margin: EdgeInsets.all(50),
-                          padding: EdgeInsets.all(20),
-                          child: Text(
-                              'Do you feel more accepting of vaccines now?',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.white,
-                              )
-                              // textAlign: TextAlign.center,
+    return OrientationBuilder(builder: (context, orientation) {
+      return orientation == Orientation.portrait
+          ? MaterialApp(
+              home: Scaffold(
+                appBar: AppBar(
+                  title: Text('Survey App'),
+                ),
+                body: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              height: MediaQuery.of(context).size.height * 0.22,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(136, 14, 79, 1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  // margin: EdgeInsets.all(50),
+                                  padding: EdgeInsets.all(20),
+                                  child: Text(
+                                      'Do you feel more accepting of vaccines now?',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.white,
+                                      )
+                                      // textAlign: TextAlign.center,
+                                      ),
+                                ),
                               ),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              // margin: EdgeInsets.all(50),
+                              padding: EdgeInsets.all(20),
+                              child: Row(
+                                children: <Widget>[
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '1';
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.145,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_1.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '2';
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.145,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_2.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '3';
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.145,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_3.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '4';
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.145,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_4.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '5';
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.145,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_5.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  // ])
+                                ],
+                              ),
+                            ),
+                            _success.length > 0
+                                ? successWidget()
+                                : errorWidget(),
+                            Container(
+                              margin: EdgeInsets.all(50),
+                              child: Row(
+                                children: [
+                                  _loading == false
+                                      ? Container(
+                                          margin: EdgeInsets.only(
+                                              right: 10, left: 30),
+                                          child: ButtonWidget(
+                                            danger: true,
+                                            text: 'Back',
+                                            onTap: () => Navigator.pop(context),
+                                          ),
+                                        )
+                                      : Container(
+                                          margin: EdgeInsets.only(
+                                              top: 10, left: 80),
+                                          child: Container()),
+                                  Container(
+                                    child: ButtonWidget(
+                                        loadingState: _loading,
+                                        text: 'Submit',
+                                        onTap: () async {
+                                          await validateInput();
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      // margin: EdgeInsets.all(50),
-                      padding: EdgeInsets.all(20),
-                      child: Row(
-                        children: <Widget>[
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen4Answer['screen5'] = '1';
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.145,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/img/png/emoji_1.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen4Answer['screen5'] = '2';
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.145,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/img/png/emoji_2.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen4Answer['screen5'] = '3';
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.145,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/img/png/emoji_3.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen4Answer['screen5'] = '4';
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.145,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/img/png/emoji_4.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen4Answer['screen5'] = '5';
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.145,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/img/png/emoji_5.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          // ])
-                        ],
-                      ),
-                    ),
-                    _success.length > 0 ? successWidget() : errorWidget(),
-                    Container(
-                      margin: EdgeInsets.all(50),
-                      child: Row(
-                        children: [
-                          _loading == false
-                              ? Container(
-                                  margin: EdgeInsets.only(right: 10, left: 30),
-                                  child: ButtonWidget(
-                                    danger: true,
-                                    text: 'Back',
-                                    onTap: () => Navigator.pop(context),
-                                  ),
-                                )
-                              : Container(
-                                  margin: EdgeInsets.only(top: 10, left: 80),
-                                  child: Container()),
-                          Container(
-                            child: ButtonWidget(
-                                loadingState: _loading,
-                                text: 'Submit',
-                                onTap: () async {
-                                  await validateInput();
-                                }),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            )
+          : MaterialApp(
+              home: Scaffold(
+                appBar: AppBar(
+                  title: Text('Survey App'),
+                ),
+                body: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: ListView(
+                    children: <Widget>[
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              height:
+                                  MediaQuery.of(context).size.height * 0.422,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(136, 14, 79, 1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  // margin: EdgeInsets.all(50),
+                                  padding: EdgeInsets.all(20),
+                                  child: Text(
+                                      'Do you feel more accepting of vaccines now?',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.white,
+                                      )
+                                      // textAlign: TextAlign.center,
+                                      ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              // margin: EdgeInsets.all(50),
+                              padding: EdgeInsets.all(20),
+                              child: Row(
+                                children: <Widget>[
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '1';
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.25,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.120,
+                                      margin: EdgeInsets.only(top: 5, left: 40),
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_1.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '2';
+                                    },
+                                    child: Container(
+                                      
+                                    height: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.124,
+                                    margin: EdgeInsets.only(top: 5, left: 40),
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_2.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '3';
+                                    },
+                                    child: Container(
+                                      
+                                    height: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.120,
+                                    margin: EdgeInsets.only(top: 5, left: 40),
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_3.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '4';
+                                    },
+                                    child: Container(
+                                      
+                                    height: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.120,
+                                    margin: EdgeInsets.only(top: 5, left: 40),
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_4.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen4Answer['screen5'] = '5';
+                                    },
+                                    child: Container(
+                                      
+                                    height: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.124,
+                                    margin: EdgeInsets.only(top: 5, left: 40),
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/emoji_5.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  // ])
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(10),
+                            ),
+                            _success.length > 0
+                                ? successWidget()
+                                : errorWidget(),
+                            Container(
+                              margin: EdgeInsets.all(50),
+                              child: Row(
+                                children: [
+                                  _loading == false
+                                      ? Container(
+                                          margin: EdgeInsets.only(
+                                              right: 10, left: 200),
+                                          child: ButtonWidget(
+                                            danger: true,
+                                            text: 'Back',
+                                            onTap: () => Navigator.pop(context),
+                                          ),
+                                        )
+                                      : Container(
+                                          margin: EdgeInsets.only(
+                                              top: 10, left: 80),
+                                          child: Container()),
+                                  Container(
+                                    child: ButtonWidget(
+                                        loadingState: _loading,
+                                        text: 'Submit',
+                                        onTap: () async {
+                                          await validateInput();
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+    });
   }
 }

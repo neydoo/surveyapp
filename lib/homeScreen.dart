@@ -21,33 +21,40 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+StreamSubscription streamSubscription;
+
 class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     runCheck();
   }
 
+  void dispose() {
+    streamSubscription.cancel();
+    super.dispose();
+  }
+
   var connectionBloc = ConnectionBloc();
 
   runCheck() {
     print('start running check-');
-    var oneSec = Duration(seconds: 15);
+    var oneSec = Duration(seconds: 60);
     Timer.periodic(oneSec, (Timer t) async {
       final directory = await getApplicationDocumentsDirectory();
       final file = File('${directory.path}/survey.json');
       bool fileExists = file.existsSync();
       connectionBloc.dispatch(CheckInternet());
       final result = await InternetAddress.lookup('google.com');
+      if (fileExists == false) {
+        print("file doesn't exists");
+        print('done with check- no file');
+        // return;
+      }
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         if (fileExists == true) {
           print('file exists');
           print('start upload of offline data');
           submitOffline();
-        }
-        if (fileExists == false) {
-          print("file doesn't exists");
-          print('done with check- no file');
-          // submitOffline();
         }
       }
       connectionBloc.dispatch(CheckInternet());
@@ -104,23 +111,26 @@ class _HomeState extends State<Home> {
 
           var decodedResponse = json.decode(response.body);
           int statusCode = response.statusCode;
+          print(jsonContent.length);
           if (statusCode == 200) {
+            // if (statusCode == 200 && jsonContent[i] == jsonContent.length - 1) {
             print(decodedResponse);
-            // jsonCon
-            jsonContent.remove(jsonContent[i]);
+
             print('-------------------------------');
-            print(jsonContent.length);
-            if (jsonContent.length <= 1) {
-              deleteFile();
-              setState(() {
-                offlineList = [];
-              });
+            print(jsonContent[i]);
+            setState(() {
+              offlineList = [];
+            });
+            if (jsonContent[i] == jsonContent.length - 1) {
+              return deleteFile();
             }
           }
+          // return;
         } catch (e) {
           print("error: $e");
         }
       }
+      return deleteFile();
     }
   }
 
@@ -153,90 +163,148 @@ class _HomeState extends State<Home> {
   bool deletable = false;
 
   Widget build(BuildContext context) {
-    return WillPopScope(
-        child: MaterialApp(
-          home: Scaffold(
-            appBar: AppBar(
-              title: Text('Survey App'),
-            ),
-            body: Center(
-                child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 250),
-                  child: RaisedButton(
-                    child: Text('Take Survey'),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => User()),
+    return buildPage(context);
+  }
+
+  buildPage(BuildContext context) {
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return orientation == Orientation.portrait
+            ? WillPopScope(
+                child: MaterialApp(
+                  home: Scaffold(
+                    appBar: AppBar(
+                      title: Text('Survey App'),
+                    ),
+                    body: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 250),
+                            child: RaisedButton(
+                              child: Text('Take Survey'),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => User()),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 50),
+                            child: FlatButton(
+                              child: Text("Logout >>"),
+                              onPressed: () async {
+                                await Authentication.logout();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => Login(),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 50),
-                  child: FlatButton(
-                    child: Text("Logout >>"),
-                    onPressed: () async {
-                      await Authentication.logout();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => Login(),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
-            )),
-          ),
-        ),
-        onWillPop: () {
-          return showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text("Confirm Exit"),
-                  content: Text("Are you sure you want to exit?"),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("YES"),
-                      onPressed: () {
-                        SystemNavigator.pop();
-                      },
+                onWillPop: () {
+                  return showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Confirm Exit"),
+                          content: Text("Are you sure you want to exit?"),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("YES"),
+                              onPressed: () {
+                                SystemNavigator.pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text("NO"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      });
+                  // return Future.value(true);
+                },
+              )
+            : WillPopScope(
+                child: MaterialApp(
+                  home: Scaffold(
+                    appBar: AppBar(
+                      title: Text('Survey App'),
                     ),
-                    FlatButton(
-                      child: Text("NO"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ],
-                );
-              });
-          // return Future.value(true);
-        });
-    // },
-    // }
-    Widget build(BuildContext context) {
-      return MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Survey App'),
-          ),
-          body: Center(
-            child: RaisedButton(
-              child: Text('Take Survey'),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (BuildContext context) => User()),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
+                    body: Center(
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 70,left: 200),
+                            child: RaisedButton(
+                              child: Text('Take Survey'),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => User()),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 70, left: 150),
+                            child: FlatButton(
+                              child: Text("Logout >>"),
+                              onPressed: () async {
+                                await Authentication.logout();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => Login(),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                onWillPop: () {
+                  return showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Confirm Exit"),
+                          content: Text("Are you sure you want to exit?"),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("YES"),
+                              onPressed: () {
+                                SystemNavigator.pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text("NO"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      });
+                  // return Future.value(true);
+                },
+              );
+      },
+    );
   }
 }

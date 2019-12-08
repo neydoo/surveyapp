@@ -207,146 +207,291 @@ class _UserState extends State<User> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: true,
-      body: FormKeyboardActions(
-        keyboardActionsPlatform: KeyboardActionsPlatform.ALL, //optional
-        keyboardBarColor: Colors.grey[200],
-        nextFocus: true,
-        actions: [
-          // KeyboardAction(
-          //   focusNode: _nodeText1,
-          // ),
-          // KeyboardAction(
-          //   focusNode: _nodeText2,
-          // ),
-          // KeyboardAction(
-          //   focusNode: _nodeText3,
-          // ),
-        ],
-        child: Stack(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/img/png/full-bg.png"),
-                      fit: BoxFit.cover)),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0),
-                  ),
-                ),
-                child: SingleChildScrollView(
-                  child: Container(
-                    constraints: BoxConstraints(maxWidth: 250),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "User Data",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16.0,
-                            fontFamily: "Poppins",
+    return OrientationBuilder(builder: (context, orientation) {
+      return orientation == Orientation.portrait
+          ? Scaffold(
+              resizeToAvoidBottomPadding: true,
+              body: FormKeyboardActions(
+                keyboardActionsPlatform: KeyboardActionsPlatform.ALL, //optional
+                keyboardBarColor: Colors.grey[200],
+                nextFocus: true,
+                actions: [
+                  // KeyboardAction(
+                  //   focusNode: _nodeText1,
+                  // ),
+                  // KeyboardAction(
+                  //   focusNode: _nodeText2,
+                  // ),
+                  // KeyboardAction(
+                  //   focusNode: _nodeText3,
+                  // ),
+                ],
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/img/png/full-bg.png"),
+                              fit: BoxFit.cover)),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 30),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15.0),
+                            topRight: Radius.circular(15.0),
                           ),
                         ),
-                        SizedBox(
-                          height: 15.0,
+                        child: SingleChildScrollView(
+                          child: Container(
+                            constraints: BoxConstraints(maxWidth: 250),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "User Data",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16.0,
+                                    fontFamily: "Poppins",
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                FormInputWidget(
+                                  label: "Participant Name",
+                                  onChanged: (text) {
+                                    if (text.length >= 1) {
+                                      return setState(() {
+                                        _nameError = "";
+                                      });
+                                    }
+                                    return setState(() {
+                                      _nameError = "Fill up name";
+                                    });
+                                  },
+                                  controller: pname,
+                                  keyboardType: TextInputType.text,
+                                  node: _nodeText1,
+                                ),
+                                nameErrorWidget(),
+                                SizedBox(
+                                  height: 13.0,
+                                ),
+                                FormInputWidget(
+                                  label: "Participant Email",
+                                  onChanged: (text) {
+                                    if (text.length >= 1) {
+                                      return setState(() {
+                                        _emailError = "";
+                                      });
+                                    }
+                                    return setState(() {
+                                      _emailError = "Fill up email";
+                                    });
+                                  },
+                                  controller: email,
+                                  keyboardType: TextInputType.emailAddress,
+                                  node: _nodeText2,
+                                ),
+                                emailErrorWidget(),
+                                SizedBox(
+                                  height: 13.0,
+                                ),
+                                FormInputWidget(
+                                  label: "Name of play",
+                                  onChanged: (text) {
+                                    if (text.length >= 1) {
+                                      return setState(() {
+                                        _nameError = "";
+                                      });
+                                    }
+                                    return setState(() {
+                                      _playError =
+                                          "Fill up the name of the play";
+                                    });
+                                  },
+                                  controller: play,
+                                  keyboardType: TextInputType.text,
+                                  node: _nodeText3,
+                                ),
+                                playErrorWidget(),
+                                SizedBox(
+                                  height: 13.0,
+                                ),
+                                errorWidget(),
+                                SizedBox(
+                                  height: 4.0,
+                                ),
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                ButtonWidget(
+                                    text: "Next",
+                                    loadingState: loading,
+                                    onTap: () async {
+                                      await validateInput();
+                                    }),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        FormInputWidget(
-                          label: "Participant Name",
-                          onChanged: (text) {
-                            if (text.length >= 1) {
-                              return setState(() {
-                                _nameError = "";
-                              });
-                            }
-                            return setState(() {
-                              _nameError = "Fill up name";
-                            });
-                          },
-                          controller: pname,
-                          keyboardType: TextInputType.text,
-                          node: _nodeText1,
-                        ),
-                        nameErrorWidget(),
-                        SizedBox(
-                          height: 13.0,
-                        ),
-                        FormInputWidget(
-                          label: "Participant Email",
-                          onChanged: (text) {
-                            if (text.length >= 1) {
-                              return setState(() {
-                                _emailError = "";
-                              });
-                            }
-                            return setState(() {
-                              _emailError = "Fill up email";
-                            });
-                          },
-                          controller: email,
-                          keyboardType: TextInputType.emailAddress,
-                          node: _nodeText2,
-                        ),
-                        emailErrorWidget(),
-                        SizedBox(
-                          height: 13.0,
-                        ),
-                        FormInputWidget(
-                          label: "Name of play",
-                          onChanged: (text) {
-                            if (text.length >= 1) {
-                              return setState(() {
-                                _nameError = "";
-                              });
-                            }
-                            return setState(() {
-                              _playError = "Fill up the name of the play";
-                            });
-                          },
-                          controller: play,
-                          keyboardType: TextInputType.text,
-                          node: _nodeText3,
-                        ),
-                        playErrorWidget(),
-                        SizedBox(
-                          height: 13.0,
-                        ),
-                        errorWidget(),
-                        SizedBox(
-                          height: 4.0,
-                        ),
-                        SizedBox(
-                          height: 16.0,
-                        ),
-                        ButtonWidget(
-                            text: "Next",
-                            loadingState: loading,
-                            onTap: () async {
-                              await validateInput();
-                            }),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            )
+          : Scaffold(
+              resizeToAvoidBottomPadding: true,
+              body: FormKeyboardActions(
+                keyboardActionsPlatform: KeyboardActionsPlatform.ALL, //optional
+                keyboardBarColor: Colors.grey[200],
+                nextFocus: true,
+                actions: [
+                  // KeyboardAction(
+                  //   focusNode: _nodeText1,
+                  // ),
+                  // KeyboardAction(
+                  //   focusNode: _nodeText2,
+                  // ),
+                  // KeyboardAction(
+                  //   focusNode: _nodeText3,
+                  // ),
+                ],
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/img/png/full-bg.png"),
+                              fit: BoxFit.cover)),
+                    ),
+                    ListView(children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 30),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15.0),
+                            topRight: Radius.circular(15.0),
+                          ),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Container(
+                            constraints: BoxConstraints(maxWidth: 250),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "User Data",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16.0,
+                                    fontFamily: "Poppins",
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                FormInputWidget(
+                                  label: "Participant Name",
+                                  onChanged: (text) {
+                                    if (text.length >= 1) {
+                                      return setState(() {
+                                        _nameError = "";
+                                      });
+                                    }
+                                    return setState(() {
+                                      _nameError = "Fill up name";
+                                    });
+                                  },
+                                  controller: pname,
+                                  keyboardType: TextInputType.text,
+                                  node: _nodeText1,
+                                ),
+                                nameErrorWidget(),
+                                SizedBox(
+                                  height: 13.0,
+                                ),
+                                FormInputWidget(
+                                  label: "Participant Email",
+                                  onChanged: (text) {
+                                    if (text.length >= 1) {
+                                      return setState(() {
+                                        _emailError = "";
+                                      });
+                                    }
+                                    return setState(() {
+                                      _emailError = "Fill up email";
+                                    });
+                                  },
+                                  controller: email,
+                                  keyboardType: TextInputType.emailAddress,
+                                  node: _nodeText2,
+                                ),
+                                emailErrorWidget(),
+                                SizedBox(
+                                  height: 13.0,
+                                ),
+                                FormInputWidget(
+                                  label: "Name of play",
+                                  onChanged: (text) {
+                                    if (text.length >= 1) {
+                                      return setState(() {
+                                        _nameError = "";
+                                      });
+                                    }
+                                    return setState(() {
+                                      _playError =
+                                          "Fill up the name of the play";
+                                    });
+                                  },
+                                  controller: play,
+                                  keyboardType: TextInputType.text,
+                                  node: _nodeText3,
+                                ),
+                                playErrorWidget(),
+                                SizedBox(
+                                  height: 13.0,
+                                ),
+                                errorWidget(),
+                                SizedBox(
+                                  height: 4.0,
+                                ),
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                ButtonWidget(
+                                    text: "Next",
+                                    loadingState: loading,
+                                    onTap: () async {
+                                      await validateInput();
+                                    }),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ],
+                ),
+              ),
+            );
+    });
   }
 }

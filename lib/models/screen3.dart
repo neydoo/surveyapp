@@ -42,7 +42,7 @@ class _Screen3State extends State<Screen3> {
       return Column(
         children: <Widget>[
           SizedBox(
-            height: 2,
+            height: 4,
           ),
           Text(
             _error,
@@ -60,366 +60,870 @@ class _Screen3State extends State<Screen3> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Survey App'),
-        ),
-        body: Container(
-          margin: EdgeInsets.only(top: 20),
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                    padding: EdgeInsets.all(20),
-                    height: MediaQuery.of(context).size.height * 0.22,
-                    child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(136, 14, 79, 1),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                        ),
-                        child: Container(
+    return OrientationBuilder(builder: (context, orientation) {
+      return orientation == Orientation.portrait
+          ? MaterialApp(
+              home: Scaffold(
+                appBar: AppBar(
+                  title: Text('Survey App'),
+                ),
+                body: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                            padding: EdgeInsets.all(20),
+                            height: MediaQuery.of(context).size.height * 0.22,
+                            child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(136, 14, 79, 1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  // margin: EdgeInsets.all(50),
+                                  padding: EdgeInsets.all(20),
+                                  child: Text(
+                                      'Would you recommend the show to another person?',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.white,
+                                      )
+                                      // textAlign: TextAlign.center,
+                                      ),
+                                ))),
+                        Container(
                           width: double.infinity,
                           // margin: EdgeInsets.all(50),
-                          padding: EdgeInsets.all(20),
-                          child: Text(
-                              'Would you recommend the show to another person?',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.white,
-                              )
-                              // textAlign: TextAlign.center,
+                          padding: EdgeInsets.only(left: 50, top: 20),
+                          child: Column(
+                            children: [
+                              Row(children: <Widget>[
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "0";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.120,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/zero.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "1";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.120,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/one.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "2";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.120,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/two.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "3";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.120,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/three.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "4";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.120,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/four.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                              ]),
+                              Row(
+                                children: [
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "5";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.120,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/five.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "6";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.120,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/six.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "7";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.120,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/seven.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "8";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.120,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/eight.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "9";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.120,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/nine.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  // VerifiTap(
+                                  //   onTap: () {
+                                  //     setState(() {
+                                  //       _error = "";
+                                  //     });
+                                  //     widget.screen2Answer['screen3'] = "10";
+                                  //   },
+                                  //   child: Container(
+                                  //     height:
+                                  //         MediaQuery.of(context).size.height *
+                                  //             0.07,
+                                  //     margin: EdgeInsets.all(5),
+                                  //     width: MediaQuery.of(context).size.width *
+                                  //         0.120,
+                                  //     decoration: BoxDecoration(
+                                  //         // color: VerifiColors.blue,
+                                  //         image: DecorationImage(
+                                  //           image: AssetImage(
+                                  //               "assets/img/png/ten.png"),
+                                  //           fit: BoxFit.cover,
+                                  //         ),
+                                  //         boxShadow: [
+                                  //           BoxShadow(
+                                  //             color:
+                                  //                 Color.fromRGBO(0, 0, 0, 0.1),
+                                  //             blurRadius: 19.5,
+                                  //             offset: Offset(0, 6),
+                                  //           )
+                                  //         ],
+                                  //         borderRadius: BorderRadius.all(
+                                  //             Radius.circular(5))),
+                                  //   ),
+                                  // )
+                                ],
                               ),
-                        ))),
-                Container(
-                  width: double.infinity,
-                  // margin: EdgeInsets.all(50),
-                  padding: EdgeInsets.only(left: 50, top: 20),
-                  child: Column(
-                    children: [
-                      Row(children: <Widget>[
-                        VerifiTap(
-                          onTap: () {
-                            setState(() {
-                              _error = "";
-                            });
-                            widget.screen2Answer['screen3'] = "1";
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            margin: EdgeInsets.all(5),
-                            width: MediaQuery.of(context).size.width * 0.120,
-                            decoration: BoxDecoration(
-                                // color: VerifiColors.blue,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/img/png/one.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.1),
-                                    blurRadius: 19.5,
-                                    offset: Offset(0, 6),
-                                  )
-                                ],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
+                            ],
                           ),
                         ),
-                        VerifiTap(
-                          onTap: () {
-                            setState(() {
-                              _error = "";
-                            });
-                            widget.screen2Answer['screen3'] = "2";
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            margin: EdgeInsets.all(5),
-                            width: MediaQuery.of(context).size.width * 0.120,
-                            decoration: BoxDecoration(
-                                // color: VerifiColors.blue,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/img/png/two.png"),
-                                  fit: BoxFit.cover,
+                        errorWidget(),
+                        Container(
+                          margin: EdgeInsets.all(50),
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                child: ButtonWidget(
+                                  danger: true,
+                                  text: 'Back',
+                                  onTap: () => Navigator.pop(context),
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.1),
-                                    blurRadius: 19.5,
-                                    offset: Offset(0, 6),
-                                  )
-                                ],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
+                              ),
+                              Container(
+                                // margin: EdgeInsets.all(10),
+                                child: ButtonWidget(
+                                  text: 'Next',
+                                  onTap: () => validateInput(),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        VerifiTap(
-                          onTap: () {
-                            setState(() {
-                              _error = "";
-                            });
-                            widget.screen2Answer['screen3'] = "3";
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            margin: EdgeInsets.all(5),
-                            width: MediaQuery.of(context).size.width * 0.120,
-                            decoration: BoxDecoration(
-                                // color: VerifiColors.blue,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/img/png/three.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.1),
-                                    blurRadius: 19.5,
-                                    offset: Offset(0, 6),
-                                  )
-                                ],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                          ),
-                        ),
-                        VerifiTap(
-                          onTap: () {
-                            setState(() {
-                              _error = "";
-                            });
-                            widget.screen2Answer['screen3'] = "4";
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            margin: EdgeInsets.all(5),
-                            width: MediaQuery.of(context).size.width * 0.120,
-                            decoration: BoxDecoration(
-                                // color: VerifiColors.blue,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/img/png/four.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.1),
-                                    blurRadius: 19.5,
-                                    offset: Offset(0, 6),
-                                  )
-                                ],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                          ),
-                        ),
-                        VerifiTap(
-                          onTap: () {
-                            setState(() {
-                              _error = "";
-                            });
-                            widget.screen2Answer['screen3'] = "5";
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            margin: EdgeInsets.all(5),
-                            width: MediaQuery.of(context).size.width * 0.120,
-                            decoration: BoxDecoration(
-                                // color: VerifiColors.blue,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/img/png/five.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.1),
-                                    blurRadius: 19.5,
-                                    offset: Offset(0, 6),
-                                  )
-                                ],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                          ),
-                        ),
-                      ]),
-                      Row(
-                        children: [
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen2Answer['screen3'] = "6";
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.120,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image: AssetImage("assets/img/png/six.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen2Answer['screen3'] = "7";
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.120,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/img/png/seven.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen2Answer['screen3'] = "8";
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.120,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/img/png/eight.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen2Answer['screen3'] = "9";
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.120,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/img/png/nine.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          ),
-                          VerifiTap(
-                            onTap: () {
-                              setState(() {
-                                _error = "";
-                              });
-                              widget.screen2Answer['screen3'] = "10";
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              margin: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.120,
-                              decoration: BoxDecoration(
-                                  // color: VerifiColors.blue,
-                                  image: DecorationImage(
-                                    image: AssetImage("assets/img/png/ten.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.1),
-                                      blurRadius: 19.5,
-                                      offset: Offset(0, 6),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-                errorWidget(),
-                Container(
-                  margin: EdgeInsets.all(50),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only( left: 20,right: 20),
-                        child: ButtonWidget(
-                          danger: true,
-                          text: 'Back',
-                          onTap: () => Navigator.pop(context),
-                        ),
-                      ),
-                      Container(
-                        // margin: EdgeInsets.all(10),
-                        child: ButtonWidget(
-                          text: 'Next',
-                          onTap: () => validateInput(),
-                        ),
-                      ),
-                    ],
-                  ),
+              ),
+            )
+          : MaterialApp(
+              home: Scaffold(
+                appBar: AppBar(
+                  title: Text('Survey App'),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+                body: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: ListView(children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Container(
+                            padding: EdgeInsets.all(20),
+                            height: MediaQuery.of(context).size.height * 0.432,
+                            child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(136, 14, 79, 1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  // margin: EdgeInsets.all(50),
+                                  padding: EdgeInsets.all(20),
+                                  child: Text(
+                                      'Would you recommend the show to another person?',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.white,
+                                      )
+                                      // textAlign: TextAlign.center,
+                                      ),
+                                ))),
+                        Container(
+                          width: double.infinity,
+                          // margin: EdgeInsets.all(50),
+                          padding: EdgeInsets.only(left: 50, top: 20),
+                          child: Row(
+                            children: [
+                              Row(children: <Widget>[
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "0";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.145,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.070,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/zero.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "1";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.145,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.070,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/one.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "2";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.145,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.070,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/two.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "3";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.145,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.070,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/three.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "4";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.145,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.070,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/four.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                                VerifiTap(
+                                  onTap: () {
+                                    setState(() {
+                                      _error = "";
+                                    });
+                                    widget.screen2Answer['screen3'] = "5";
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.145,
+                                    margin: EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.070,
+                                    decoration: BoxDecoration(
+                                        // color: VerifiColors.blue,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/img/png/five.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(0, 0, 0, 0.1),
+                                            blurRadius: 19.5,
+                                            offset: Offset(0, 6),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                ),
+                              ]),
+                              Row(
+                                children: [
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "6";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.145,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.070,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/six.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "7";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.145,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.070,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/seven.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "8";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.145,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.070,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/eight.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  VerifiTap(
+                                    onTap: () {
+                                      setState(() {
+                                        _error = "";
+                                      });
+                                      widget.screen2Answer['screen3'] = "9";
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.145,
+                                      margin: EdgeInsets.all(5),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.070,
+                                      decoration: BoxDecoration(
+                                          // color: VerifiColors.blue,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/img/png/nine.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.1),
+                                              blurRadius: 19.5,
+                                              offset: Offset(0, 6),
+                                            )
+                                          ],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                    ),
+                                  ),
+                                  // VerifiTap(
+                                  //   onTap: () {
+                                  //     setState(() {
+                                  //       _error = "";
+                                  //     });
+                                  //     widget.screen2Answer['screen3'] = "10";
+                                  //   },
+                                  //   child: Container(
+                                  //     height: MediaQuery.of(context).size.height *
+                                  //       0.145,
+                                  //   margin: EdgeInsets.all(5),
+                                  //   width: MediaQuery.of(context).size.width *
+                                  //       0.070,
+                                  //     decoration: BoxDecoration(
+                                  //         // color: VerifiColors.blue,
+                                  //         image: DecorationImage(
+                                  //           image: AssetImage(
+                                  //               "assets/img/png/ten.png"),
+                                  //           fit: BoxFit.cover,
+                                  //         ),
+                                  //         boxShadow: [
+                                  //           BoxShadow(
+                                  //             color:
+                                  //                 Color.fromRGBO(0, 0, 0, 0.1),
+                                  //             blurRadius: 19.5,
+                                  //             offset: Offset(0, 6),
+                                  //           )
+                                  //         ],
+                                  //         borderRadius: BorderRadius.all(
+                                  //             Radius.circular(5))),
+                                  //   ),
+                                  // )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                        ),
+                        errorWidget(),
+                        Container(
+                          margin: EdgeInsets.all(50),
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 180, right: 20),
+                                child: ButtonWidget(
+                                  danger: true,
+                                  text: 'Back',
+                                  onTap: () => Navigator.pop(context),
+                                ),
+                              ),
+                              Container(
+                                // margin: EdgeInsets.all(10),
+                                child: ButtonWidget(
+                                  text: 'Next',
+                                  onTap: () => validateInput(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]),
+                ),
+              ),
+            );
+    });
   }
 }
