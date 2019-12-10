@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:surveyapp/models/answersScreen.dart';
 import 'package:surveyapp/models/authentication.dart';
 import 'package:surveyapp/custom_widgets/verifi_tap.dart';
 import 'package:surveyapp/bloc/bloc.dart';
@@ -18,15 +19,15 @@ import 'package:path_provider/path_provider.dart';
 
 class Screen5 extends StatefulWidget {
   final Map screen4Answer;
+  final TextEditingController email;
+  final TextEditingController pname;
 
-  const Screen5({Key key, this.screen4Answer}) : super(key: key);
+  const Screen5({Key key, this.screen4Answer, this.pname, this.email}) : super(key: key);
   @override
   _Screen5State createState() => _Screen5State();
 }
 
 class _Screen5State extends State<Screen5> {
-  // final connectionBloc = ConnectionBloc();
-  Map answers = {};
   void initState() {
     super.initState();
     location.onLocationChanged().listen((value) {
@@ -41,6 +42,11 @@ class _Screen5State extends State<Screen5> {
 
   Map<String, double> userLocation;
   StreamSubscription streamSubscription;
+  bool smiley1 = false;
+  bool smiley2 = false;
+  bool smiley3 = false;
+  bool smiley4 = false;
+  bool smiley5 = false;
 
   validateInput() async {
     // print(widget.screen4Answer['name']);
@@ -60,19 +66,27 @@ class _Screen5State extends State<Screen5> {
       _loading = true;
     });
     try {
-      if (connectionBloc.connected == true) {
-        print('hello---');
-        await upload();
-        setState(() {
-          _loading = false;
-        });
-      } else {
-        print('hello1');
-        await save();
-        setState(() {
-          _loading = false;
-        });
-      }
+      // if (connectionBloc.connected == true) {
+      print('hello---');
+      // await upload();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => Final(
+            screen5Answer: widget.screen4Answer, pname: widget.pname, email: widget.email
+          ),
+        ),
+      );
+      setState(() {
+        _loading = false;
+      });
+      // } else {
+      //   print('hello1');
+      //   await save();
+      //   setState(() {
+      //     _loading = false;
+      //   });
+      // }
       setState(() {
         _loading = false;
       });
@@ -284,209 +298,347 @@ class _Screen5State extends State<Screen5> {
                 ),
                 body: Container(
                   margin: EdgeInsets.only(top: 20),
-                  child: Column(
+                  child: ListView(
                     children: <Widget>[
                       Container(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               padding: EdgeInsets.all(20),
-                              height: MediaQuery.of(context).size.height * 0.22,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(136, 14, 79, 1),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
+                              // height: MediaQuery.of(context).size.height * 0.22,
+                              child: Text(
+                                  'Do you feel more accepting of vaccines now?',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.black,
+                                  )
+                                  // textAlign: TextAlign.center,
                                   ),
-                                ),
-                                child: Container(
-                                  width: double.infinity,
-                                  // margin: EdgeInsets.all(50),
-                                  padding: EdgeInsets.all(20),
-                                  child: Text(
-                                      'Do you feel more accepting of vaccines now?',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        color: Colors.white,
-                                      )
-                                      // textAlign: TextAlign.center,
-                                      ),
-                                ),
-                              ),
                             ),
                             Container(
                               width: double.infinity,
                               // margin: EdgeInsets.all(50),
                               padding: EdgeInsets.all(20),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '1';
-                                    },
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.07,
-                                      margin: EdgeInsets.all(5),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.145,
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_1.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = true;
+                                            smiley2 = false;
+                                            smiley3 = false;
+                                            smiley4 = false;
+                                            smiley5 = false;
+                                          });
+                                          widget.screen4Answer['screen5'] = '1';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '1'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          // margin:
+                                          //     widget.screen4Answer['screen5'] == '1'
+                                          //         ? EdgeInsets.all(1)
+                                          //         : EdgeInsets.all(5),
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '1'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_1.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Terrible',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '2';
-                                    },
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.07,
-                                      margin: EdgeInsets.all(5),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.145,
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_2.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = false;
+                                            smiley2 = true;
+                                            smiley3 = false;
+                                            smiley4 = false;
+                                            smiley5 = false;
+                                          });
+                                          widget.screen4Answer['screen5'] = '2';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '2'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '2'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_2.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Bad',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '3';
-                                    },
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.07,
-                                      margin: EdgeInsets.all(5),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.145,
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_3.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = false;
+                                            smiley2 = false;
+                                            smiley3 = true;
+                                            smiley4 = false;
+                                            smiley5 = false;
+                                          });
+                                          widget.screen4Answer['screen5'] = '3';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '3'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '3'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_3.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Okay',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '4';
-                                    },
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.07,
-                                      margin: EdgeInsets.all(5),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.145,
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_4.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = false;
+                                            smiley2 = false;
+                                            smiley3 = false;
+                                            smiley4 = true;
+                                            smiley5 = false;
+                                          });
+                                          widget.screen4Answer['screen5'] = '4';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '4'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '4'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_4.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Good',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '5';
-                                    },
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.07,
-                                      margin: EdgeInsets.all(5),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.145,
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_5.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = false;
+                                            smiley2 = false;
+                                            smiley3 = false;
+                                            smiley4 = false;
+                                            smiley5 = true;
+                                          });
+                                          widget.screen4Answer['screen5'] = '5';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '5'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '5'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.188
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.145,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_5.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Great',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  // ])
                                 ],
                               ),
                             ),
@@ -494,13 +646,13 @@ class _Screen5State extends State<Screen5> {
                                 ? successWidget()
                                 : errorWidget(),
                             Container(
-                              margin: EdgeInsets.all(50),
+                              margin: EdgeInsets.all(30),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   _loading == false
                                       ? Container(
-                                          margin: EdgeInsets.only(
-                                              right: 10, left: 30),
+                                          margin: EdgeInsets.only(right: 10),
                                           child: ButtonWidget(
                                             danger: true,
                                             text: 'Back',
@@ -514,7 +666,7 @@ class _Screen5State extends State<Screen5> {
                                   Container(
                                     child: ButtonWidget(
                                         loadingState: _loading,
-                                        text: 'Submit',
+                                        text: 'Next',
                                         onTap: () async {
                                           await validateInput();
                                         }),
@@ -544,203 +696,332 @@ class _Screen5State extends State<Screen5> {
                           children: [
                             Container(
                               padding: EdgeInsets.all(20),
-                              height:
-                                  MediaQuery.of(context).size.height * 0.422,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(136, 14, 79, 1),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
+                              child: Text(
+                                  'Do you feel more accepting of vaccines now?',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.black,
+                                  )
+                                  // textAlign: TextAlign.center,
                                   ),
-                                ),
-                                child: Container(
-                                  width: double.infinity,
-                                  // margin: EdgeInsets.all(50),
-                                  padding: EdgeInsets.all(20),
-                                  child: Text(
-                                      'Do you feel more accepting of vaccines now?',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        color: Colors.white,
-                                      )
-                                      // textAlign: TextAlign.center,
-                                      ),
-                                ),
-                              ),
                             ),
                             Container(
                               width: double.infinity,
-                              // margin: EdgeInsets.all(50),
-                              padding: EdgeInsets.all(20),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '1';
-                                    },
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.25,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.120,
-                                      margin: EdgeInsets.only(top: 5, left: 40),
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_1.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = true;
+                                            smiley2 = false;
+                                            smiley3 = false;
+                                            smiley4 = false;
+                                            smiley5 = false;
+                                          });
+                                          widget.screen4Answer['screen5'] = '1';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '1'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.178
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.123,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '1'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.178
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.123,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_1.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Terrible',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '2';
-                                    },
-                                    child: Container(
-                                      
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.124,
-                                    margin: EdgeInsets.only(top: 5, left: 40),
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_2.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = false;
+                                            smiley2 = true;
+                                            smiley3 = false;
+                                            smiley4 = false;
+                                            smiley5 = false;
+                                          });
+                                          widget.screen4Answer['screen5'] = '2';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '2'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.178
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.123,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '2'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.178
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.123,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_2.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Bad',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '3';
-                                    },
-                                    child: Container(
-                                      
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.120,
-                                    margin: EdgeInsets.only(top: 5, left: 40),
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_3.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = false;
+                                            smiley2 = false;
+                                            smiley3 = true;
+                                            smiley4 = false;
+                                            smiley5 = false;
+                                          });
+                                          widget.screen4Answer['screen5'] = '3';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '3'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.178
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.123,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '3'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.178
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.123,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_3.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Okay',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '4';
-                                    },
-                                    child: Container(
-                                      
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.120,
-                                    margin: EdgeInsets.only(top: 5, left: 40),
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_4.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = false;
+                                            smiley2 = false;
+                                            smiley3 = false;
+                                            smiley4 = true;
+                                            smiley5 = false;
+                                          });
+                                          widget.screen4Answer['screen5'] = '4';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '4'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.175
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.125,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '4'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.175
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.125,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_4.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Good',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  VerifiTap(
-                                    onTap: () {
-                                      setState(() {
-                                        _error = "";
-                                      });
-                                      widget.screen4Answer['screen5'] = '5';
-                                    },
-                                    child: Container(
-                                      
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.124,
-                                    margin: EdgeInsets.only(top: 5, left: 40),
-                                      decoration: BoxDecoration(
-                                          // color: VerifiColors.blue,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/img/png/emoji_5.png"),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1),
-                                              blurRadius: 19.5,
-                                              offset: Offset(0, 6),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                    ),
+                                  Column(
+                                    children: <Widget>[
+                                      VerifiTap(
+                                        onTap: () {
+                                          setState(() {
+                                            _error = "";
+                                            smiley1 = false;
+                                            smiley2 = false;
+                                            smiley3 = false;
+                                            smiley4 = false;
+                                            smiley5 = true;
+                                          });
+                                          widget.screen4Answer['screen5'] = '5';
+                                        },
+                                        child: Container(
+                                          height:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '5'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.178
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.123,
+                                          width:
+                                              widget.screen4Answer['screen5'] ==
+                                                      '5'
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.178
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.125,
+                                          decoration: BoxDecoration(
+                                              // color: VerifiColors.blue,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/img/png/emoji_5.png"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.1),
+                                                  blurRadius: 19.5,
+                                                  offset: Offset(0, 6),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Great',
+                                        style: TextStyle(color: Colors.black87),
+                                      )
+                                    ],
                                   ),
-                                  // ])
                                 ],
                               ),
                             ),
@@ -753,11 +1034,11 @@ class _Screen5State extends State<Screen5> {
                             Container(
                               margin: EdgeInsets.all(50),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   _loading == false
                                       ? Container(
-                                          margin: EdgeInsets.only(
-                                              right: 10, left: 200),
+                                          margin: EdgeInsets.only(right: 10),
                                           child: ButtonWidget(
                                             danger: true,
                                             text: 'Back',
@@ -771,7 +1052,7 @@ class _Screen5State extends State<Screen5> {
                                   Container(
                                     child: ButtonWidget(
                                         loadingState: _loading,
-                                        text: 'Submit',
+                                        text: 'Next',
                                         onTap: () async {
                                           await validateInput();
                                         }),

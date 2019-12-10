@@ -66,72 +66,79 @@ class _HomeState extends State<Home> {
     print('check internet and begin upload');
     final result = await InternetAddress.lookup('google.com');
     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/survey.json');
-      List jsonContent = json.decode(file.readAsStringSync());
+      try {
+        final directory = await getApplicationDocumentsDirectory();
+        final file = File('${directory.path}/survey.json');
+        List jsonContent = json.decode(file.readAsStringSync());
 
-      Map data = {
-        "answer1": '',
-        "answer2": '',
-        "answer3": '',
-        "answer4": '',
-        "answer5": '',
-        "fullName": '',
-        "play": '',
-        "email": '',
-        'lat': '',
-        'lng': ''
-      };
+        Map data = {
+          "answer1": '',
+          "answer2": '',
+          "answer3": '',
+          "answer4": '',
+          "answer5": '',
+          "fullName": '',
+          "phone": '',
+          "sex": '',
+          "comment": '',
+          'lat': '',
+          'lng': ''
+        };
 
-      for (var i = 0; i < jsonContent.length; i++) {
-        data['answer1'] = jsonContent[i]['answer1'];
-        data['answer2'] = jsonContent[i]['answer2'];
-        data['answer3'] = jsonContent[i]['answer3'];
-        data['answer4'] = jsonContent[i]['answer4'];
-        data['answer5'] = jsonContent[i]['answer5'];
-        data['fullName'] = jsonContent[i]['fullName'];
-        data['play'] = jsonContent[i]['play'];
-        data['email'] = jsonContent[i]['email'];
-        data['lng'] = jsonContent[i]['lng'];
-        data['lat'] = jsonContent[i]['lat'];
+        for (var i = 0; i < jsonContent.length; i++) {
+          data['answer1'] = jsonContent[i]['answer1'];
+          data['answer2'] = jsonContent[i]['answer2'];
+          data['answer3'] = jsonContent[i]['answer3'];
+          data['answer4'] = jsonContent[i]['answer4'];
+          data['answer5'] = jsonContent[i]['answer5'];
+          data['fullName'] = jsonContent[i]['fullName'];
+          data['comment'] = jsonContent[i]['comment'];
+          data['phone'] = jsonContent[i]['phone'];
+          data['sex'] = jsonContent[i]['sex'];
+          data['lng'] = jsonContent[i]['lng'];
+          data['lat'] = jsonContent[i]['lat'];
 
-        try {
-          String token = await Authentication.getToken();
+          try {
+            String token = await Authentication.getToken();
 
-          print('sending offline data');
+            print('sending offline data');
 
-          http.Response response = await http.post(
-            API.save,
-            body: json.encode(data),
-            headers: {
-              HttpHeaders.contentTypeHeader: 'application/json',
-              HttpHeaders.authorizationHeader: "Bearer $token"
-            },
-          );
+            http.Response response = await http.post(
+              API.save,
+              body: json.encode(data),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+                HttpHeaders.authorizationHeader: "Bearer $token"
+              },
+            );
 
-          var decodedResponse = json.decode(response.body);
-          int statusCode = response.statusCode;
-          print(jsonContent.length);
-          if (statusCode == 200) {
-            // if (statusCode == 200 && jsonContent[i] == jsonContent.length - 1) {
-            print(decodedResponse);
+            var decodedResponse = json.decode(response.body);
+            int statusCode = response.statusCode;
+            print(statusCode);
+            if (statusCode == 200) {
+              // if (statusCode == 200 && jsonContent[i] == jsonContent.length - 1) {
+              print(decodedResponse);
 
-            print('-------------------------------');
-            print(jsonContent[i]);
-            setState(() {
-              offlineList = [];
-            });
-            if (jsonContent[i] == jsonContent.length - 1) {
-              return deleteFile();
+              print('-------------------------------');
+              print(jsonContent[i]);
+              setState(() {
+                offlineList = [];
+              });
+              print('file sent');
+            } else {
+              print('------------!!!!!!!!!!!!!!--------');
+              return print('file not sent');
             }
+          } catch (e) {
+            return print("error: $e");
           }
-          // return;
-        } catch (e) {
-          print("error: $e");
         }
+        return deleteFile();
+      } catch (e) {
+        print("error: $e");
       }
-      return deleteFile();
     }
+    return print('no internet');
   }
 
   readFile() async {
@@ -180,9 +187,10 @@ class _HomeState extends State<Home> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(top: 250),
+                            margin: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.35),
                             child: RaisedButton(
-                              child: Text('Take Survey'),
+                              child: Text('Start Survey'),
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -191,7 +199,8 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 50),
+                            margin: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.02),
                             child: FlatButton(
                               child: Text("Logout >>"),
                               onPressed: () async {
@@ -247,9 +256,9 @@ class _HomeState extends State<Home> {
                       child: Row(
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(top: 70,left: 200),
+                            margin: EdgeInsets.only(top: 30, left: 200),
                             child: RaisedButton(
-                              child: Text('Take Survey'),
+                              child: Text('Start Survey'),
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -258,7 +267,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 70, left: 150),
+                            margin: EdgeInsets.only(top: 30, left: 150),
                             child: FlatButton(
                               child: Text("Logout >>"),
                               onPressed: () async {

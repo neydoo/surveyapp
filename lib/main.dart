@@ -39,37 +39,69 @@ class _SurveyState extends State<Survey> {
           return Scaffold();
         } else if (state is LoadedAuthState) {
           if (state.auth) {
-            return Container(
-              color: Colors.white,
-              padding: EdgeInsets.only(top: 200),
-              child: SplashScreen(
-                seconds: 5,
-                navigateAfterSeconds: Home(),
-                backgroundColor: Colors.white,
-                loaderColor: Colors.white,
-                image: new Image.asset(
-                  'assets/img/png/corona.jpg',
-                  height: MediaQuery.of(context).size.height * 4.921,
-                  width: MediaQuery.of(context).size.width * 4.921,
-                ),
-              ),
-            );
+            return OrientationBuilder(builder: (context, orientation) {
+              return orientation == Orientation.portrait
+                  ? Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.only(top: 200),
+                      child: SplashScreen(
+                        photoSize: 150,
+                        seconds: 5,
+                        navigateAfterSeconds: Home(),
+                        backgroundColor: Colors.white,
+                        loaderColor: Colors.white,
+                        image: new Image.asset(
+                          'assets/img/png/splash.png',
+                        ),
+                      ),
+                    )
+                  : Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.only(top: 113),
+                      child: SplashScreen(
+                        photoSize: 70,
+                        seconds: 5,
+                        navigateAfterSeconds: Home(),
+                        backgroundColor: Colors.white,
+                        loaderColor: Colors.white,
+                        image: new Image.asset(
+                          'assets/img/png/splash.png',
+                        ),
+                      ),
+                    );
+            });
           }
-          return Container(
-            color: Colors.white,
-            padding: EdgeInsets.only(top: 200),
-            child: SplashScreen(
-              seconds: 5,
-              navigateAfterSeconds: Login(),
-              loaderColor: Colors.white,
-              backgroundColor: Colors.white,
-              image: new Image.asset(
-                'assets/img/png/corona.jpg',
-                height: MediaQuery.of(context).size.height * 4.921,
-                width: MediaQuery.of(context).size.width * 4.921,
-              ),
-            ),
-          );
+          return OrientationBuilder(builder: (context, orientation) {
+              return orientation == Orientation.portrait
+                  ? Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.only(top: 200),
+                      child: SplashScreen(
+                        photoSize: 150,
+                        seconds: 5,
+                        navigateAfterSeconds: Login(),
+                        backgroundColor: Colors.white,
+                        loaderColor: Colors.white,
+                        image: new Image.asset(
+                          'assets/img/png/splash.png',
+                        ),
+                      ),
+                    )
+                  : Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.only(top: 113),
+                      child: SplashScreen(
+                        photoSize: 70,
+                        seconds: 5,
+                        navigateAfterSeconds: Login(),
+                        backgroundColor: Colors.white,
+                        loaderColor: Colors.white,
+                        image: new Image.asset(
+                          'assets/img/png/splash.png',
+                        ),
+                      ),
+                    );
+            });
         }
       },
     );
@@ -77,16 +109,8 @@ class _SurveyState extends State<Survey> {
 }
 
 class AppMain extends StatelessWidget {
-  // GraphQLClient client;
-  // initMethod(context) {
-  //   client = GraphQLProvider.of(context).value;
-  // }
-
   @override
   Widget build(BuildContext context) {
-    final HttpLink httpLink = HttpLink(
-      uri: 'https://700f317a.ngrok.io/graphql',
-    );
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationBloc>(

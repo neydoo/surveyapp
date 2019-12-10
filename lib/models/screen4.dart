@@ -8,8 +8,10 @@ import 'package:surveyapp/config/verifi_colors.dart';
 
 class Screen4 extends StatefulWidget {
   final Map screen3Answer;
+  final TextEditingController email;
+  final TextEditingController pname;
 
-  const Screen4({Key key, this.screen3Answer}) : super(key: key);
+  const Screen4({Key key, this.screen3Answer, this.pname, this.email}) : super(key: key);
 
   @override
   _Screen4State createState() => _Screen4State();
@@ -31,13 +33,17 @@ class _Screen4State extends State<Screen4> {
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => Screen5(
-          screen4Answer: widget.screen3Answer,
+          screen4Answer: widget.screen3Answer, pname: widget.pname, email: widget.email
         ),
       ),
     );
   }
 
   String _error = "";
+  bool smiley1 = false;
+  bool smiley2 = false;
+  bool smiley3 = false;
+
   Widget errorWidget() {
     if (_error.length > 0) {
       return Column(
@@ -70,170 +76,239 @@ class _Screen4State extends State<Screen4> {
                 ),
                 body: Container(
                   margin: EdgeInsets.only(top: 20),
-                  child: Column(
+                  child: ListView(
                     children: <Widget>[
                       Column(
                         children: [
                           Container(
-                            child: Row(
+                            child: Column(
                               children: <Widget>[
                                 Column(children: [
                                   Container(
                                     padding: EdgeInsets.all(20),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.22,
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        color: Color.fromRGBO(136, 14, 79, 1),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(8),
+                                    // height: MediaQuery.of(context).size.height *
+                                    //     0.25,
+                                    child: Text(
+                                        'Would you have been willing to pay N100 for the show? ',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          color: Colors.black,
+                                        )
+                                        // textAlign: TextAlign.center,
                                         ),
-                                      ),
-                                      child: Container(
-                                        width: double.infinity,
-                                        // margin: EdgeInsets.all(50),
-                                        padding: EdgeInsets.all(20),
-                                        child: Text(
-                                            'Would you have been willing to pay N100 for the show? ',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 30,
-                                              color: Colors.white,
-                                            )
-                                            // textAlign: TextAlign.center,
-                                            ),
-                                      ),
-                                    ),
                                   ),
                                   Container(
                                     width: double.infinity,
                                     // margin: EdgeInsets.all(50),
-                                    padding: EdgeInsets.all(20),
+                                    // padding: EdgeInsets.all(20),
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
-                                        VerifiTap(
-                                          onTap: () {
-                                            setState(() {
-                                              _error = "";
-                                            });
-                                            widget.screen3Answer['screen4'] =
-                                                '1';
-                                          },
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
-                                            margin: EdgeInsets.all(25),
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.145,
-                                            decoration: BoxDecoration(
-                                                // color: VerifiColors.blue,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "assets/img/png/emoji_1.png"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color.fromRGBO(
-                                                        0, 0, 0, 0.1),
-                                                    blurRadius: 19.5,
-                                                    offset: Offset(0, 6),
-                                                  )
-                                                ],
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(5))),
-                                          ),
+                                        Column(
+                                          children: <Widget>[
+                                            VerifiTap(
+                                              onTap: () {
+                                                setState(() {
+                                                  _error = "";
+                                                  smiley1 = true;
+                                                  smiley2 = false;
+                                                  smiley3 = false;
+                                                });
+                                                widget.screen3Answer[
+                                                    'screen4'] = '1';
+                                              },
+                                              child: Container(
+                                                height: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '1'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.240
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.140,
+                                                width: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '1'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.240
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.140,
+                                                // margin:
+                                                // EdgeInsets.only(left: 20),
+                                                decoration: BoxDecoration(
+                                                    // color: VerifiColors.blue,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/img/png/emoji_1.png"),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Color.fromRGBO(
+                                                            0, 0, 0, 0.1),
+                                                        blurRadius: 19.5,
+                                                        offset: Offset(0, 6),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5))),
+                                              ),
+                                            ),
+                                            Text('No',
+                                                style: TextStyle(
+                                                    color: Colors.black87))
+                                          ],
                                         ),
-                                        VerifiTap(
-                                          onTap: () {
-                                            setState(() {
-                                              _error = "";
-                                            });
-                                            widget.screen3Answer['screen4'] =
-                                                '2';
-                                          },
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
-                                            margin: EdgeInsets.all(25),
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.145,
-                                            decoration: BoxDecoration(
-                                                // color: VerifiColors.blue,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "assets/img/png/emoji_3.png"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color.fromRGBO(
-                                                        0, 0, 0, 0.1),
-                                                    blurRadius: 19.5,
-                                                    offset: Offset(0, 6),
-                                                  )
-                                                ],
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(5))),
-                                          ),
+                                        Column(
+                                          children: <Widget>[
+                                            VerifiTap(
+                                              onTap: () {
+                                                setState(() {
+                                                  _error = "";
+                                                  smiley1 = false;
+                                                  smiley2 = true;
+                                                  smiley3 = false;
+                                                });
+                                                widget.screen3Answer[
+                                                    'screen4'] = '2';
+                                              },
+                                              child: Container(
+                                                height: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '2'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.240
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.140,
+                                                width: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '2'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.245
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.145,
+                                                decoration: BoxDecoration(
+                                                    // color: VerifiColors.blue,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/img/png/emoji_3.png"),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Color.fromRGBO(
+                                                            0, 0, 0, 0.1),
+                                                        blurRadius: 19.5,
+                                                        offset: Offset(0, 6),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5))),
+                                              ),
+                                            ),
+                                            Text('Maybe',
+                                                style: TextStyle(
+                                                    color: Colors.black87))
+                                          ],
                                         ),
-                                        VerifiTap(
-                                          onTap: () {
-                                            setState(() {
-                                              _error = "";
-                                            });
-                                            widget.screen3Answer['screen4'] =
-                                                '3';
-                                          },
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
-                                            margin: EdgeInsets.all(25),
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.145,
-                                            decoration: BoxDecoration(
-                                                // color: VerifiColors.blue,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "assets/img/png/emoji_5.png"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color.fromRGBO(
-                                                        0, 0, 0, 0.1),
-                                                    blurRadius: 19.5,
-                                                    offset: Offset(0, 6),
-                                                  )
-                                                ],
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(5))),
-                                          ),
+                                        Column(
+                                          children: <Widget>[
+                                            VerifiTap(
+                                              onTap: () {
+                                                setState(() {
+                                                  _error = "";
+                                                  smiley1 = false;
+                                                  smiley2 = false;
+                                                  smiley3 = true;
+                                                });
+                                                widget.screen3Answer[
+                                                    'screen4'] = '3';
+                                              },
+                                              child: Container(
+                                                height: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '3'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.25
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.148,
+                                                width: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '3'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.25
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.148,
+                                                decoration: BoxDecoration(
+                                                    // color: VerifiColors.blue,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/img/png/emoji_5.png"),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Color.fromRGBO(
+                                                            0, 0, 0, 0.1),
+                                                        blurRadius: 19.5,
+                                                        offset: Offset(0, 6),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5))),
+                                              ),
+                                            ),
+                                            Text('Yes',
+                                                style: TextStyle(
+                                                    color: Colors.black87))
+                                          ],
                                         ),
-                                        // ])
                                       ],
                                     ),
                                   ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                  ),
                                   errorWidget(),
                                   Container(
-                                    margin: EdgeInsets.all(30),
+                                    margin: EdgeInsets.all(20),
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          margin: EdgeInsets.only(
-                                              left: 40, right: 20),
+                                          margin: EdgeInsets.only(right: 20),
                                           child: ButtonWidget(
                                             danger: true,
                                             text: 'Back',
@@ -277,149 +352,223 @@ class _Screen4State extends State<Screen4> {
                                 Column(children: [
                                   Container(
                                     padding: EdgeInsets.all(20),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.432,
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        color: Color.fromRGBO(136, 14, 79, 1),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(8),
+                                    // height: MediaQuery.of(context).size.height *
+                                    //     0.432,
+                                    child: Text(
+                                        'Would you have been willing to pay N100 for the show? ',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          color: Colors.black,
+                                        )
+                                        // textAlign: TextAlign.center,
                                         ),
-                                      ),
-                                      child: Container(
-                                        width: double.infinity,
-                                        // margin: EdgeInsets.all(50),
-                                        padding: EdgeInsets.all(20),
-                                        child: Text(
-                                            'Would you have been willing to pay N100 for the show? ',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 30,
-                                              color: Colors.white,
-                                            )
-                                            // textAlign: TextAlign.center,
-                                            ),
-                                      ),
-                                    ),
                                   ),
                                   Container(
                                     width: double.infinity,
                                     // margin: EdgeInsets.all(50),
-                                    padding: EdgeInsets.all(20),
+                                    // padding: EdgeInsets.all(20),
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
-                                        VerifiTap(
-                                          onTap: () {
-                                            setState(() {
-                                              _error = "";
-                                            });
-                                            widget.screen3Answer['screen4'] =
-                                                '1';
-                                          },
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.25,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.120,
-                                            margin: EdgeInsets.only(left: 100),
-                                            decoration: BoxDecoration(
-                                                // color: VerifiColors.blue,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "assets/img/png/emoji_1.png"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color.fromRGBO(
-                                                        0, 0, 0, 0.1),
-                                                    blurRadius: 19.5,
-                                                    offset: Offset(0, 6),
-                                                  )
-                                                ],
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(5))),
-                                          ),
+                                        Column(
+                                          children: <Widget>[
+                                            VerifiTap(
+                                              onTap: () {
+                                                setState(() {
+                                                  _error = "";
+                                                  smiley1 = true;
+                                                  smiley2 = false;
+                                                  smiley3 = false;
+                                                });
+                                                widget.screen3Answer[
+                                                    'screen4'] = '1';
+                                              },
+                                              child: Container(
+                                                height: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '1'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.35
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.25,
+                                                width: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '1'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.178
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.120,
+                                                // margin: EdgeInsets.only(left: 100),
+                                                decoration: BoxDecoration(
+                                                    // color: VerifiColors.blue,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/img/png/emoji_1.png"),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Color.fromRGBO(
+                                                            0, 0, 0, 0.1),
+                                                        blurRadius: 19.5,
+                                                        offset: Offset(0, 6),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5))),
+                                              ),
+                                            ),
+                                            Text(
+                                              'No',
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            )
+                                          ],
                                         ),
-                                        VerifiTap(
-                                          onTap: () {
-                                            setState(() {
-                                              _error = "";
-                                            });
-                                            widget.screen3Answer['screen4'] =
-                                                '2';
-                                          },
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.25,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.120,
-                                            margin: EdgeInsets.only(left: 100),
-                                            decoration: BoxDecoration(
-                                                // color: VerifiColors.blue,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "assets/img/png/emoji_3.png"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color.fromRGBO(
-                                                        0, 0, 0, 0.1),
-                                                    blurRadius: 19.5,
-                                                    offset: Offset(0, 6),
-                                                  )
-                                                ],
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(5))),
-                                          ),
+                                        Column(
+                                          children: <Widget>[
+                                            VerifiTap(
+                                              onTap: () {
+                                                setState(() {
+                                                  _error = "";
+                                                  smiley1 = false;
+                                                  smiley2 = true;
+                                                  smiley3 = false;
+                                                });
+                                                widget.screen3Answer[
+                                                    'screen4'] = '2';
+                                              },
+                                              child: Container(
+                                                height: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '2'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.35
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.25,
+                                                width: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '2'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.178
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.120,
+                                                // margin: EdgeInsets.only(left: 100),
+                                                decoration: BoxDecoration(
+                                                    // color: VerifiColors.blue,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/img/png/emoji_3.png"),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Color.fromRGBO(
+                                                            0, 0, 0, 0.1),
+                                                        blurRadius: 19.5,
+                                                        offset: Offset(0, 6),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5))),
+                                              ),
+                                            ),
+                                            Text(
+                                              'Maybe',
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            )
+                                          ],
                                         ),
-                                        VerifiTap(
-                                          onTap: () {
-                                            setState(() {
-                                              _error = "";
-                                            });
-                                            widget.screen3Answer['screen4'] =
-                                                '3';
-                                          },
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.25,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.124,
-                                            margin: EdgeInsets.only(left: 100),
-                                            decoration: BoxDecoration(
-                                                // color: VerifiColors.blue,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "assets/img/png/emoji_5.png"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color.fromRGBO(
-                                                        0, 0, 0, 0.1),
-                                                    blurRadius: 19.5,
-                                                    offset: Offset(0, 6),
-                                                  )
-                                                ],
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(5))),
-                                          ),
+                                        Column(
+                                          children: <Widget>[
+                                            VerifiTap(
+                                              onTap: () {
+                                                setState(() {
+                                                  _error = "";
+                                                  smiley1 = false;
+                                                  smiley2 = false;
+                                                  smiley3 = true;
+                                                });
+                                                widget.screen3Answer[
+                                                    'screen4'] = '3';
+                                              },
+                                              child: Container(
+                                                height: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '3'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.36
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.25,
+                                                width: widget.screen3Answer[
+                                                            'screen4'] ==
+                                                        '3'
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.177
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.124,
+                                                // margin: EdgeInsets.only(left: 100),
+                                                decoration: BoxDecoration(
+                                                    // color: VerifiColors.blue,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/img/png/emoji_5.png"),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Color.fromRGBO(
+                                                            0, 0, 0, 0.1),
+                                                        blurRadius: 19.5,
+                                                        offset: Offset(0, 6),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5))),
+                                              ),
+                                            ),
+                                            // ])
+
+                                            Text(
+                                              'Yes',
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            )
+                                          ],
                                         ),
-                                        // ])
                                       ],
                                     ),
                                   ),
@@ -428,12 +577,13 @@ class _Screen4State extends State<Screen4> {
                                   ),
                                   errorWidget(),
                                   Container(
-                                    margin: EdgeInsets.all(50),
+                                    margin: EdgeInsets.all(20),
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          margin: EdgeInsets.only(
-                                              left: 200, right: 20),
+                                          margin: EdgeInsets.only(right: 20),
                                           child: ButtonWidget(
                                             danger: true,
                                             text: 'Back',
