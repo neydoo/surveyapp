@@ -244,11 +244,11 @@ class _LoginState extends State<Login> {
                                   });
                                 }
                                 return setState(() {
-                                  _phoneError = "Fill up your email";
+                                  _phoneError = "Fill up your email/uesrname";
                                 });
                               },
                               controller: email,
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.text,
                               node: _nodeText1,
                             ),
                             phoneErrorWidget(),

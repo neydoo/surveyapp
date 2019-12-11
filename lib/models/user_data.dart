@@ -19,11 +19,17 @@ class User extends StatefulWidget {
 class _UserState extends State<User> {
   void initState() {
     super.initState();
+
+    // location.onLocationChanged().listen((value) {
+    //   setState(() {
+    //     userLocation = value;
+    //   });
+    // });
   }
 
   var location = new Location();
 
-  Map<String, double> userLocation;
+  Map userLocation;
   bool loading = false;
   Map userdata = {};
 
@@ -36,18 +42,17 @@ class _UserState extends State<User> {
 
   // used to validate the input of the form
   getLocation() {
-    // location.onLocationChanged().listen((value) {
-    //   setState(() {
-    //     userLocation = value;
-    //   });
-    // });
     setState(() {
       _successloading = true;
     });
-    var oneSec = Duration(seconds: 5);
-    Timer.periodic(oneSec, (Timer t) async {
+
+    location.onLocationChanged().listen((value) {
+      print(value);
       setState(() {
-        _success = "success!!";
+        _success = "success!!\n latitude: " +
+            value['latitude'].toString() +
+            "\n longtitude: " +
+            value["longitude"].toString();
         _successloading = false;
       });
     });
@@ -57,7 +62,9 @@ class _UserState extends State<User> {
     setState(() {
       _emailError = "";
       _nameError = "";
+      loading = true;
     });
+
     if (email.text.length < 11) {
       setState(() {
         _emailError = "Fill up phone";
@@ -67,13 +74,23 @@ class _UserState extends State<User> {
           _nameError = "Fill up name";
         });
       }
+
+      setState(() {
+        loading = false;
+      });
       return false;
     }
+
     userdata = {
       "name": pname.text.trim(),
       "phone": email.text.trim(),
       "sex": sex
     };
+
+    setState(() {
+      loading = false;
+    });
+
     return Navigator.push(
       context,
       MaterialPageRoute(
@@ -470,7 +487,7 @@ class _UserState extends State<User> {
                                   errorWidget(),
                                   successWidget(),
                                   SizedBox(
-                                    height: 4.0,
+                                    height: 10.0,
                                   ),
                                   SizedBox(
                                     height: 16.0,
@@ -495,9 +512,6 @@ class _UserState extends State<User> {
                                               text: "Next",
                                               loadingState: loading,
                                               onTap: () async {
-                                                setState(() {
-                                                  loading = true;
-                                                });
                                                 await validateInput();
                                               }),
                                         )

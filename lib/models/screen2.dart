@@ -11,7 +11,8 @@ class Screen2 extends StatefulWidget {
   final TextEditingController pname;
   final TextEditingController email;
 
-  const Screen2({Key key, this.screen1Answer,this.pname,this.email}) : super(key: key);
+  const Screen2({Key key, this.screen1Answer, this.pname, this.email})
+      : super(key: key);
   @override
   _Screen2State createState() => _Screen2State();
 }
@@ -31,9 +32,11 @@ class _Screen2State extends State<Screen2> {
     return Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (BuildContext context) => Screen3(
-                screen2Answer: widget.screen1Answer, pname: widget.pname, email: widget.email
-              )),
+        builder: (BuildContext context) => Screen3(
+            screen2Answer: widget.screen1Answer,
+            pname: widget.pname,
+            email: widget.email),
+      ),
     );
   }
 
@@ -97,7 +100,8 @@ class _Screen2State extends State<Screen2> {
                               // margin: EdgeInsets.only(bottom: 50),
                               // padding: EdgeInsets.only(top: 20),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   Column(children: <Widget>[
                                     VerifiTap(
@@ -124,11 +128,6 @@ class _Screen2State extends State<Screen2> {
                                                         .size
                                                         .width *
                                                     0.145,
-                                        margin:
-                                            widget.screen1Answer['screen2'] ==
-                                                    "1"
-                                                ? EdgeInsets.all(1)
-                                                : EdgeInsets.all(1),
                                         width:
                                             widget.screen1Answer['screen2'] ==
                                                     "1"
@@ -189,11 +188,6 @@ class _Screen2State extends State<Screen2> {
                                                         .size
                                                         .width *
                                                     0.145,
-                                        margin:
-                                            widget.screen1Answer['screen2'] ==
-                                                    "2"
-                                                ? EdgeInsets.all(1)
-                                                : EdgeInsets.all(5),
                                         width:
                                             widget.screen1Answer['screen2'] ==
                                                     "2"
@@ -255,11 +249,6 @@ class _Screen2State extends State<Screen2> {
                                                           .size
                                                           .width *
                                                       0.145,
-                                          margin:
-                                              widget.screen1Answer['screen2'] ==
-                                                      "3"
-                                                  ? EdgeInsets.all(1)
-                                                  : EdgeInsets.all(5),
                                           width:
                                               widget.screen1Answer['screen2'] ==
                                                       "3"
@@ -322,11 +311,6 @@ class _Screen2State extends State<Screen2> {
                                                           .size
                                                           .width *
                                                       0.145,
-                                          margin:
-                                              widget.screen1Answer['screen2'] ==
-                                                      "4"
-                                                  ? EdgeInsets.all(1)
-                                                  : EdgeInsets.all(5),
                                           width:
                                               widget.screen1Answer['screen2'] ==
                                                       "4"
@@ -339,22 +323,24 @@ class _Screen2State extends State<Screen2> {
                                                           .width *
                                                       0.145,
                                           decoration: BoxDecoration(
-                                              // color: VerifiColors.blue,
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/img/png/emoji_4.png"),
-                                                fit: BoxFit.cover,
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Color.fromRGBO(
-                                                      0, 0, 0, 0.1),
-                                                  blurRadius: 19.5,
-                                                  offset: Offset(0, 6),
-                                                )
-                                              ],
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(5))),
+                                            // color: VerifiColors.blue,
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/img/png/emoji_4.png"),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Color.fromRGBO(
+                                                    0, 0, 0, 0.1),
+                                                blurRadius: 19.5,
+                                                offset: Offset(0, 6),
+                                              )
+                                            ],
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(5),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Text(
@@ -389,9 +375,6 @@ class _Screen2State extends State<Screen2> {
                                                           .size
                                                           .width *
                                                       0.145,
-                                          margin: smiley5 == true
-                                              ? EdgeInsets.all(1)
-                                              : EdgeInsets.all(5),
                                           width: smiley5 == true
                                               ? MediaQuery.of(context)
                                                       .size
@@ -495,7 +478,7 @@ class _Screen2State extends State<Screen2> {
                             // margin: EdgeInsets.all(50),
                             // padding: EdgeInsets.only(top: 20),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Column(
                                   children: <Widget>[
@@ -517,28 +500,23 @@ class _Screen2State extends State<Screen2> {
                                                     "1"
                                                 ? MediaQuery.of(context)
                                                         .size
-                                                        .height *
-                                                    0.35
+                                                        .width *
+                                                    0.178
                                                 : MediaQuery.of(context)
                                                         .size
-                                                        .height *
-                                                    0.25,
-                                        margin: widget
-                                                    .screen1Answer['screen2'] ==
-                                                "1"
-                                            ? EdgeInsets.only(top: 5, right: 30)
-                                            : EdgeInsets.only(top: 5),
+                                                        .width *
+                                                    0.125,
                                         width:
                                             widget.screen1Answer['screen2'] ==
                                                     "1"
                                                 ? MediaQuery.of(context)
                                                         .size
-                                                        .height *
-                                                    0.35
+                                                        .width *
+                                                    0.178
                                                 : MediaQuery.of(context)
                                                         .size
-                                                        .height *
-                                                    0.25,
+                                                        .width *
+                                                    0.125,
                                         decoration: BoxDecoration(
                                             // color: VerifiColors.blue,
                                             image: DecorationImage(
@@ -588,12 +566,6 @@ class _Screen2State extends State<Screen2> {
                                                         .size
                                                         .width *
                                                     0.125,
-                                        margin:
-                                            widget.screen1Answer['screen2'] ==
-                                                    "2"
-                                                ? EdgeInsets.only(
-                                                    top: 5, left: 35, right: 30)
-                                                : EdgeInsets.all(10),
                                         width:
                                             widget.screen1Answer['screen2'] ==
                                                     "2"
@@ -654,12 +626,6 @@ class _Screen2State extends State<Screen2> {
                                                         .size
                                                         .width *
                                                     0.125,
-                                        margin:
-                                            widget.screen1Answer['screen2'] ==
-                                                    "3"
-                                                ? EdgeInsets.only(
-                                                    top: 5, left: 35, right: 30)
-                                                : EdgeInsets.all(5),
                                         width:
                                             widget.screen1Answer['screen2'] ==
                                                     "3"
@@ -720,12 +686,6 @@ class _Screen2State extends State<Screen2> {
                                                         .size
                                                         .width *
                                                     0.125,
-                                        margin:
-                                            widget.screen1Answer['screen2'] ==
-                                                    "4"
-                                                ? EdgeInsets.only(
-                                                    top: 5, left: 35, right: 30)
-                                                : EdgeInsets.all(5),
                                         width:
                                             widget.screen1Answer['screen2'] ==
                                                     "4"

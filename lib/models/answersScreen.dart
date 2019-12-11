@@ -408,14 +408,6 @@ print(inputData);
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  "Final Data",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.0,
-                                    fontFamily: "Poppins",
-                                  ),
-                                ),
                                 SizedBox(
                                   height: 15.0,
                                 ),
@@ -499,14 +491,6 @@ print(inputData);
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  "Final Data",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.0,
-                                    fontFamily: "Poppins",
-                                  ),
-                                ),
                                 SizedBox(
                                   height: 15.0,
                                 ),

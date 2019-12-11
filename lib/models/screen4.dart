@@ -391,12 +391,12 @@ class _Screen4State extends State<Screen4> {
                                                         '1'
                                                     ? MediaQuery.of(context)
                                                             .size
-                                                            .height *
-                                                        0.35
+                                                            .width *
+                                                        0.178
                                                     : MediaQuery.of(context)
                                                             .size
-                                                            .height *
-                                                        0.25,
+                                                            .width *
+                                                        0.120,
                                                 width: widget.screen3Answer[
                                                             'screen4'] ==
                                                         '1'
@@ -456,12 +456,12 @@ class _Screen4State extends State<Screen4> {
                                                         '2'
                                                     ? MediaQuery.of(context)
                                                             .size
-                                                            .height *
-                                                        0.35
+                                                            .width *
+                                                        0.178
                                                     : MediaQuery.of(context)
                                                             .size
-                                                            .height *
-                                                        0.25,
+                                                            .width *
+                                                        0.120,
                                                 width: widget.screen3Answer[
                                                             'screen4'] ==
                                                         '2'
@@ -521,12 +521,12 @@ class _Screen4State extends State<Screen4> {
                                                         '3'
                                                     ? MediaQuery.of(context)
                                                             .size
-                                                            .height *
-                                                        0.36
+                                                            .width *
+                                                        0.177
                                                     : MediaQuery.of(context)
                                                             .size
-                                                            .height *
-                                                        0.25,
+                                                            .width *
+                                                        0.124,
                                                 width: widget.screen3Answer[
                                                             'screen4'] ==
                                                         '3'

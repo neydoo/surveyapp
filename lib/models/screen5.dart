@@ -386,7 +386,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Terrible',
+                                        'No',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -448,7 +448,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Bad',
+                                        'Not Really',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -510,7 +510,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Okay',
+                                        'Maybe',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -572,7 +572,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Good',
+                                        'A bit',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -634,7 +634,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Great',
+                                        'Yes',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -769,7 +769,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Terrible',
+                                        'No',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -831,7 +831,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Bad',
+                                        'Not Really',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -893,7 +893,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Okay',
+                                        'Maybe',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -955,7 +955,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Good',
+                                        'A bit',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
@@ -1017,7 +1017,7 @@ class _Screen5State extends State<Screen5> {
                                         ),
                                       ),
                                       Text(
-                                        'Great',
+                                        'Yes',
                                         style: TextStyle(color: Colors.black87),
                                       )
                                     ],
